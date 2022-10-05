@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +36,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        overridePendingTransition(R.anim.atras, R.anim.alante);
 
 
         btnLoginRegister = (Button) findViewById(R.id.btnLoginRegister);
@@ -81,7 +81,7 @@ public class Register extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         userID = mAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = db.collection("users").document(userID);
+                        DocumentReference documentReference = db.collection("Users").document(userID);
 
                         Map<String,Object> user =new HashMap<>();
                         user.put("Email", email);
