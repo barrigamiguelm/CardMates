@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -96,8 +99,16 @@ public class Register extends AppCompatActivity {
                         });
 
 
-                    } else {
-                        Toast.makeText(Register.this, "Algo salio mal", Toast.LENGTH_LONG).show();
+                    } else if(!task.isSuccessful()) {
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthUserCollisionException e) {
+                            Toast.makeText(Register.this, "El correo ya esta en uso", Toast.LENGTH_SHORT).show();
+                        } catch (FirebaseAuthWeakPasswordException e) {
+                            Toast.makeText(Register.this, "La contraseña es demasiado corta", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Log.e("TAG", e.getMessage());
+                        }
                     }
                 }
             });
