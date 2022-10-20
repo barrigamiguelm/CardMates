@@ -25,6 +25,7 @@ import com.example.cardmates.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
@@ -61,8 +62,6 @@ public class Login extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 if(etEmail == null && etPassword == null){
                     Toast.makeText(Login.this, "Porfavor ingresa los datos", Toast.LENGTH_SHORT).show();
                 }else{
@@ -74,8 +73,7 @@ public class Login extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this, Register.class);
-                startActivity(intent);
+                startActivity(new Intent(Login.this, Register.class));
             }
         });
 
@@ -103,20 +101,18 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                openMain(user);
+                                openMain();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(Login.this, "Authentication failed.",
-                                        Toast.LENGTH_LONG).show();
+                                Snackbar.make(findViewById(android.R.id.content), "Fallo la autenticacion", Snackbar.LENGTH_LONG).show();
                             }
                         }
                     });
         }
     }
 
-    private void openMain(FirebaseUser user) {
+    private void openMain() {
         startActivity(new Intent(Login.this, MainActivity.class));
     }
 

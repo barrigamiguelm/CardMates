@@ -16,6 +16,7 @@ import com.example.cardmates.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -40,7 +41,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         overridePendingTransition(R.anim.atras, R.anim.alante);
-
 
         btnLoginRegister = (Button) findViewById(R.id.btnLoginRegister);
         btnRegisterRegister = (Button) findViewById(R.id.btnRegisterRegister);
@@ -71,13 +71,23 @@ public class Register extends AppCompatActivity {
     private void createUser() {
         String email = etEmailRegister.getText().toString();
         String password = etPasswordRegister.getText().toString();
+        String passwordconfirm = etPasswordConf.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
             etEmailRegister.setError("Introduce un correo");
             etEmailRegister.requestFocus();
-        } else if (TextUtils.isEmpty(password)) {
+        }else if(!isEmailValid(email)){
+            etEmailRegister.setError("Introduce un correo valido");
+            etEmailRegister.requestFocus();
+        }else if (TextUtils.isEmpty(password)) {
             etPasswordRegister.setError("Introduce una contraseña");
             etPasswordRegister.requestFocus();
+        } else if (TextUtils.isEmpty(passwordconfirm)) {
+            etPasswordConf.setError("Introduce de nuevo la contraseña");
+            etPasswordConf.requestFocus();
+        } else if (!passwordconfirm.equals(password)) {
+            etPasswordConf.setError("Las contraseñas no coinciden");
+            etPasswordConf.requestFocus();
         } else {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -86,26 +96,29 @@ public class Register extends AppCompatActivity {
                         userID = mAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = db.collection("Users").document(userID);
 
-                        Map<String,Object> user =new HashMap<>();
+                        Map<String, Object> user = new HashMap<>();
                         user.put("Email", email);
                         user.put("Password", password);
 
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(Register.this, "Usuario registado", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(Register.this,UserProfile.class));
+                                Snackbar.make(findViewById(android.R.id.content), "Usuario registrado", Snackbar.LENGTH_LONG).show();
+                                startActivity(new Intent(Register.this, UserProfile.class));
                             }
                         });
 
 
-                    } else if(!task.isSuccessful()) {
+                    } else if (!task.isSuccessful()) {
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthUserCollisionException e) {
-                            Toast.makeText(Register.this, "El correo ya esta en uso", Toast.LENGTH_SHORT).show();
+                            etEmailRegister.setError("El correo ya esta en uso");
+                            etEmailRegister.requestFocus();
+
                         } catch (FirebaseAuthWeakPasswordException e) {
-                            Toast.makeText(Register.this, "La contraseña es demasiado corta", Toast.LENGTH_SHORT).show();
+                            etPasswordRegister.setError("La contraseña es demasiado debil");
+                            etPasswordRegister.requestFocus();
                         } catch (Exception e) {
                             Log.e("TAG", e.getMessage());
                         }
@@ -113,7 +126,10 @@ public class Register extends AppCompatActivity {
                 }
             });
         }
-
-
     }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
 }
