@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "248541037309",
+    "project_id": "cardmates-8e17e",
+    "storage_bucket": "cardmates-8e17e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248541037309:android:d9fb0a56789cb7a8aa7494",
+        "android_client_info": {
+          "package_name": "com.example.cardmates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248541037309-i93c1p7085gj0rlktdjqmgpl8q87m9p5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWk8KgcY7Db24NpUSVTvyahDz97-kcamw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248541037309-i93c1p7085gj0rlktdjqmgpl8q87m9p5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "248541037309-4imr0e4sjtsmf4kbfi71hrs9inei9bep.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cardmates"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

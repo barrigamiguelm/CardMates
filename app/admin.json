@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "cardmates-8e17e",
+  "private_key_id": "757f85d17b4f6fc0a61f4e7640b45c145c4ce464",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCxhP1CdP8jm/qg\nq3SnWn35/siskRcrnwBoJTZuqdgfF3ZsiqEZi6aWbrQxK4M1cq2hBex2ApY8UdSv\nQAu1gIydsFs7h2saIRCsDJXoX+JFs6QUncbomhyGLuWNvU8LYFg2aesZc0r5+yLN\nMQITbsCWGzoAjEzJSFetRkfjQ1Nruv2USBKsXbccd2AmoTGaDIiBc84R3kPmfqG6\nJ0Df6uZRyEu+dN8WU50pTnkHyqoULbsr1uV0lCKWFbnOipPwfQ26Ycbj1lKlatNy\nAaLFrxU3lUMeZ3LDRY8GM+4JXhT4pWkQRYqDOOuYTAQlLtGbC3kEmVF01TTB7hFi\nm/dcGxhJAgMBAAECggEAAkh/2mTiADL/d6Vk5XR46315rBsx9VjA8FX5hoBZkYLO\nKN9lQDcchXxMhde1rbsOcnmpR4Dz2OLuOEfRBBIFx6Ru8/Z4q+1yHF24Et+i1nsq\nQy1JU5C3M7RINbkSL8cFiMOhfLe6e+Ryl47dDuNtMjEM9K4D8dB5TOGlxzhEiyg8\nZt63utcdfmLMFLagutTbPpxHLvwqYS2iKz0q9/gZp45Lxy5VGcUZxsZ25UPkYilA\nfxpjs5YLdF/lE16bHh6BtWEK3CZ/mLpRa4A/Y0uJ1JdmQ4a4ILN11eBlJPt/ajvH\neqm3hjEVqLfLHICji8FbGiu9ZG9DFda+czCTKxuG9QKBgQD5OY9QFN2M2ZRTKCHs\nqFjU7JAeb8a8m1IJNc9+vQTiQCdpt5S9zpIYlU8z/VqIovueii8IEWVu/9ME6JBw\nPffs1r1czKWgicIophglTUYYFwsBoEpUBvXUrHyQn2p7hNsQeQ/7zx0rYNzSkwz8\nDWOiZRYQpb9xlClV2cSPoelWpQKBgQC2WGhZPQSBX9PzjjBFo8zV4qGxOUHpVltW\nUnuvQ831zD8QTHEKF248w4E62PKUE1WZBLLu/AyzAQi9K4WFCwnMuJdosM7Ts0KT\nni20yGIq+Qn1SN5vA7TgcHmUUiSt6FrllD04RqO0iHzwCDLGx54cxXk2LUNp6Kan\nW67G298t1QKBgBmvJufX3qU/XxvazPQ4vT7kSk34swCI+UFdvE6RaElw1x77/mY5\nPbEu4gS3nXbrZQcHsqUgNdXko3ikBw6qNDzCPK2toXwT9mB+DYr6lbix1z6JqF9U\ngE00oXm+FBk6reDauRz4UUdBKkDBSttG/fekd0ur6TjpTgE8+hbbVtLJAoGACSry\nvCHcOyD1SBaLCMVOhCZr2Lw3OyMTXoixHUO8dDI7rXcaa9Z3vWha8/l6YMWEFThu\nQqO7g7h2lwQ8J09Bw+A4BJR3IZ+upjtasu8sOFrjDEkIne5CxtIA2tsyauf2wfot\nBcpPasE9/td6rhHVOj8XdAjcjdObpWhvpiHh260CgYALCGS9XB3BC9lGQIj3uQTz\n6D5Sa6rhZBG4MT2PL5syX6fxUs/MV9siAzAgFZN2O5VXdKCKsGa5FUCbnxbWfQx9\nnQYLNNRYzP+Q2LTHNx4aKjV9MyvVCDdxu1hhYoGju5sQq8+LHi53EhibBQgFvH0Z\nTnarxcpw0l3mgVcVSchO3A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-pihnw@cardmates-8e17e.iam.gserviceaccount.com",
+  "client_id": "105281939057615787839",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-pihnw%40cardmates-8e17e.iam.gserviceaccount.com"
+}
