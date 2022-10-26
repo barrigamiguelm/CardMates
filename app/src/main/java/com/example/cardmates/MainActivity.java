@@ -9,13 +9,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.cardmates.Activities.Login;
+import com.example.cardmates.Activities.Tags;
 import com.google.common.collect.Maps;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnLogOutMain;
+    private Button btnLogOutMain,btnCards;
 
     private FirebaseAuth mAuth;
     @Override
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnLogOutMain = (Button) findViewById(R.id.btnLogOutMain);
+        btnCards = (Button) findViewById(R.id.btnCards);
         mAuth =FirebaseAuth.getInstance();
 
 
@@ -35,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        btnCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Tags.class));
+            }
+        });
 
     }
 
