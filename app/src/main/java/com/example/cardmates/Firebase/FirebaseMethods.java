@@ -70,9 +70,6 @@ public class FirebaseMethods implements FirebaseInterface {
     }
 
 
-
-
-
     public void registerNewUser(String email, String password, String name) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -105,31 +102,28 @@ public class FirebaseMethods implements FirebaseInterface {
 
     }
 
-    public void addAditionalInfo(String desc, String datebirth){
+    public void addAditionalInfo(String desc, String datebirth) {
         Map<String, Object> data = new HashMap<>();
         data.put("description", desc);
-        data.put("Date",datebirth);
-        db.collection("Users").document(userID)
-                .set(data, SetOptions.merge());
-       userProfileInterface.showInfo();
+        data.put("Date", datebirth);
+        db.collection("Users").document(userID).set(data, SetOptions.merge());
+        userProfileInterface.showInfo();
     }
 
 
     public void uploadPhotoFirebase(Uri imageUri) {
         StorageReference profilePhotos = storageReference.child("ProfilePhotos/" + userID);
-        profilePhotos.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        userProfileInterface.setPhoto(imageUri);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        userProfileInterface.setErrorPhoto();
-                    }
-                });
+        profilePhotos.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                userProfileInterface.setPhoto(imageUri);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                userProfileInterface.setErrorPhoto();
+            }
+        });
     }
 
 }

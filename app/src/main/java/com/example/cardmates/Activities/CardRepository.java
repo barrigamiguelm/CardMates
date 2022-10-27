@@ -19,7 +19,6 @@ public class CardRepository {
     private Gson gson;
     private Context applicationContext;
 
-    @Inject
     public CardRepository(Application applicationContext, Gson gson) {
         this.gson = gson;
         this.applicationContext = applicationContext;
@@ -34,7 +33,7 @@ public class CardRepository {
             inputStream.read(b);
 
             jsonString = new String(b);
-        } catch (IOException e){
+        } catch (IOException e) {
             //TODO: fix io exception
         }
 
