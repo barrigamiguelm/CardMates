@@ -64,7 +64,7 @@ public class Tags extends AppCompatActivity {
 
 
     //TODO: Poner un borde a la foto para que se vea bonito.
-    //TODO: Hacer que cuando un user se borre, borre toda la data que tenga en todas las bases de datos.
+    //TODO: Hacer que cuando un user se borre, borre toda la data que tenga en todas las bases de datos. Tambien hacer que el usuario borre gustos(mas adelante)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +98,7 @@ public class Tags extends AppCompatActivity {
                 for (Map.Entry<String, Map> entry : cardUser.entrySet()) {
                     String key = entry.getKey();
                     DatabaseReference updateRef = myRef.child(key);
+                    updateRef.updateChildren(userTags);
                     userLikesArray.add(key);
                 }
 
