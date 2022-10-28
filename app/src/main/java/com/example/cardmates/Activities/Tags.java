@@ -25,13 +25,22 @@ import com.example.cardmates.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Tags extends AppCompatActivity {
@@ -39,16 +48,23 @@ public class Tags extends AppCompatActivity {
     private RecyclerView recyclerTags;
     private Context context;
     private Button checkList;
-
+    private String userID;
+    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
 
-    private ArrayList<String> selected = new ArrayList<>();
+
+    ArrayList<String> userLikesArray = new ArrayList<>();
+    Map<String, ArrayList> userLikes = new HashMap<>();
+    Map<String, Map> cardUser = new HashMap<>();
+    Map<String, Object> userTags = new HashMap<>();
 
 
-    //TODO:subir gustos ( ni idea de como) a firebase.
-
+    //TODO: Poner un borde a la foto para que se vea bonito.
+    //TODO: Hacer que cuando un user se borre, borre toda la data que tenga en todas las bases de datos.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +76,15 @@ public class Tags extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerTags);
         checkList = (Button) findViewById(R.id.checkList);
 
-
-        context = getApplicationContext();
+        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        userID = mAuth.getCurrentUser().getUid();
+        context = getApplicationContext();
+        database = FirebaseDatabase.getInstance("https://cardmates-8e17e-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference("Cards");
+
+        DocumentReference documentReferenceUser = db.collection("Users").document(userID);
+
 
         Query query = db.collection("Cards");
         FirestoreRecyclerOptions<Cards> options = new FirestoreRecyclerOptions.Builder<Cards>()
@@ -73,14 +95,17 @@ public class Tags extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                for (int i = 0; i < selected.size(); i++) {
-                    String next = selected.get(i);
-                    stringBuilder.append(next);
-                    stringBuilder.append("\n");
+                for (Map.Entry<String, Map> entry : cardUser.entrySet()) {
+                    String key = entry.getKey();
+                    DatabaseReference updateRef = myRef.child(key);
+                    userLikesArray.add(key);
                 }
-                Toast.makeText(context, stringBuilder, Toast.LENGTH_SHORT).show();
-                stringBuilder.setLength(0);
+
+                userLikes.put("userLikes", userLikesArray);
+                documentReferenceUser.set(userLikes, SetOptions.merge());
             }
+
+
         });
 
         adapter = new FirestoreRecyclerAdapter<Cards, CardsViewHolder>(options) {
@@ -97,6 +122,7 @@ public class Tags extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull CardsViewHolder holder, int position, @NonNull Cards model) {
 
                 holder.title.setText(model.getTitle());
+
                 Glide.with(context)
                         .load(model.getImage())
                         .into(holder.img);
@@ -107,13 +133,14 @@ public class Tags extends AppCompatActivity {
                         if (model.isChecked() == false) {
                             model.setChecked(true);
                             holder.tick.setVisibility(View.VISIBLE);
-                            selected.add(model.getTagTitle());
+                            userTags.put(userID, true);
+                            cardUser.put(model.getTagTitle(), userTags);
 
                         } else if (model.isChecked() == true) {
                             model.setChecked(false);
                             holder.tick.setVisibility(View.GONE);
-                            String borrar = model.getTagTitle();
-                            selected.remove(borrar);
+                            userTags.remove(userID);
+                            cardUser.remove(model.getTagTitle());
                         }
                     }
                 });
