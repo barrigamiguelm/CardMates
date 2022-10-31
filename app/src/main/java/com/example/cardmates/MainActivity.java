@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.cardmates.databinding.ActivityMainBinding;
+import com.example.cardmates.Activities.Login;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
     private Button btnLogOutMain;
-
     private FirebaseAuth mAuth;
 
     @Override
