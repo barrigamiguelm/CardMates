@@ -1,5 +1,8 @@
 package com.example.cardmates.Activities;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -15,39 +18,38 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cardmates.Dagger.CardMatesApp;
 import com.example.cardmates.Firebase.FirebaseMethods;
 import com.example.cardmates.MainActivity;
 import com.example.cardmates.R;
+import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.UserProfileInterface;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 
 //todo editar para que la foto no sea tan grande y alinear con el nombre, cambiar el presentate porque esta raro
 public class UserProfile extends AppCompatActivity implements UserProfileInterface {
 
     private EditText etDateBirt, etUserDesc;
-    private FirebaseMethods firebaseMethods;
     private TextView tvUserNameUserProfile;
     private ImageView profilePhotoUserProfile;
     private Button btnCreateUser, btnSkipUserProfile;
-
     private Uri imageUri;
+
+    @Inject
+    FirebaseInterface firebaseInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((CardMatesApp) getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-
 
         initializeAll();
         initializeUserProfileInterface();
@@ -96,7 +98,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
             public void onClick(View view) {
                 String desc = etUserDesc.getText().toString();
                 String datebirth = etDateBirt.getText().toString();
-                firebaseMethods.addAditionalInfo(desc, datebirth);
+                firebaseInterface.addAditionalInfo(desc, datebirth);
             }
         });
 
@@ -104,7 +106,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
     }
 
     private void initializeUserProfileInterface() {
-        firebaseMethods.initializeUserProfileInterface(this);
+        firebaseInterface.initializeUserProfileInterface(this);
     }
 
 
@@ -115,8 +117,6 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         etUserDesc = (EditText) findViewById(R.id.etUserDesc);
         tvUserNameUserProfile = (TextView) findViewById(R.id.tvUserNameUserProfile);
         profilePhotoUserProfile = (ImageView) findViewById(R.id.profilePhotoUserProfile);
-        firebaseMethods = new FirebaseMethods(this);
-
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString("name");
         tvUserNameUserProfile.setText(name);
@@ -140,21 +140,19 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         dialog.show();
     }
 
+
     private void chosePicture() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+        mGetContent.launch("image/*");
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            firebaseMethods.uploadPhotoFirebase(imageUri);
-        }
-    }
+
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    firebaseInterface.uploadPhotoFirebase(uri);
+                }
+            });
 
 
     private void updateCalendar(Calendar calendar) {

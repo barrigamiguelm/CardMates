@@ -8,4 +8,5 @@ public interface UserProfileInterface {
     void showInfo();
 
     void setErrorPhoto();
+
 }

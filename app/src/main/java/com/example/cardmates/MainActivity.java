@@ -1,40 +1,52 @@
 package com.example.cardmates;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
+import com.example.cardmates.databinding.ActivityMainBinding;
 import com.example.cardmates.Activities.Login;
+
 import com.example.cardmates.Activities.Tags;
 import com.google.common.collect.Maps;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnLogOutMain,btnCards;
+    ActivityMainBinding binding;
 
+
+    private Button btnLogOutMain;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        btnLogOutMain = (Button) findViewById(R.id.btnLogOutMain);
-        btnCards = (Button) findViewById(R.id.btnCards);
-        mAuth =FirebaseAuth.getInstance();
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment());
 
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
 
-        btnLogOutMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, Login.class));
+            switch (item.getItemId()) {
+
+                case R.id.home:
+                    replaceFragment(new HomeFragment());
+                    break;
+                case R.id.chat:
+                    replaceFragment(new ChatFragment());
+                    break;
+                case R.id.profile:
+                    replaceFragment(new ProfileFragment());
             }
+
+            return true;
         });
 
 
@@ -47,9 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void replaceFragment(Fragment fragment) {
 
-
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
+    }
 
 
 }
