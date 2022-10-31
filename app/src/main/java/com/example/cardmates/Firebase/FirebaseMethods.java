@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -78,7 +80,6 @@ public class FirebaseMethods implements FirebaseInterface {
     public void initializeRegisterView(RegisterInterface registerInterface) {
         this.registerInterface = registerInterface;
     }
-
 
     public void checkUser() {
         FirebaseUser user = mAuth.getCurrentUser();
@@ -145,27 +146,25 @@ public class FirebaseMethods implements FirebaseInterface {
         Map<String, Object> data = new HashMap<>();
         data.put("description", desc);
         data.put("Date", datebirth);
-        db.collection("Users").document(userID)
-                .set(data, SetOptions.merge());
+        db.collection("Users").document(userID).set(data, SetOptions.merge());
+
         userProfileInterface.showInfo();
     }
 
 
     public void uploadPhotoFirebase(Uri imageUri) {
         StorageReference profilePhotos = storageReference.child("ProfilePhotos/" + userID);
-        profilePhotos.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        userProfileInterface.setPhoto(imageUri);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        userProfileInterface.setErrorPhoto();
-                    }
-                });
+        profilePhotos.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                userProfileInterface.setPhoto(imageUri);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                userProfileInterface.setErrorPhoto();
+            }
+        });
     }
 
 }

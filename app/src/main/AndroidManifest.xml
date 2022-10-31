@@ -14,9 +14,17 @@
         android:theme="@style/Theme.CardMates"
         android:name=".Dagger.CardMatesApp"
         tools:targetApi="31">
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+
+        <activity
+            android:name=".Activities.Tags"
+            android:exported="true">
+
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+     
 
         <activity
             android:name=".Activities.UserProfile"
@@ -40,6 +48,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
