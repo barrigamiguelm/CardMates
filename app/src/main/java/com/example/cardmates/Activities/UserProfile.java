@@ -142,34 +142,17 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
 
 
     private void chosePicture() {
-       Intent intent2 = new Intent();
-        intent2.setType("image/*");
-        intent2.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent2, 1);
-        /* mGetContent.launch("image/*");*/
+        mGetContent.launch("image/*");
     }
 
 
-/*
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    // Handle the returned Uri
-                    // imageUri = uri;
                     firebaseInterface.uploadPhotoFirebase(uri);
                 }
-            });}*/
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && data != null && data.getData() != null) {
-            imageUri = data.getData();
-            firebaseInterface.uploadPhotoFirebase(imageUri);
-        }
-    }
-
+            });
 
 
     private void updateCalendar(Calendar calendar) {
