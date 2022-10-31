@@ -9,29 +9,34 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.cardmates.Dagger.CardMatesApp;
 import com.example.cardmates.Firebase.FirebaseMethods;
 import com.example.cardmates.R;
+import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.RegisterInterface;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import javax.inject.Inject;
 
 
 public class Register extends AppCompatActivity implements RegisterInterface {
 
     private Button btnRegisterRegister, btnLoginRegister;
     private EditText etPasswordConf, etPasswordRegister, etEmailRegister, etUserName;
-    private FirebaseMethods firebaseMethods;
+
+    @Inject
+    FirebaseInterface firebaseInterface;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((CardMatesApp) getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         overridePendingTransition(R.anim.atras, R.anim.alante);
-
         initializeAll();
-        initializeView();
+        initializeRegisterView();
 
 
         btnRegisterRegister.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +62,7 @@ public class Register extends AppCompatActivity implements RegisterInterface {
         etPasswordRegister = (EditText) findViewById(R.id.etPasswordRegister);
         etEmailRegister = (EditText) findViewById(R.id.etEmailRegister);
         etUserName = (EditText) findViewById(R.id.etUserName);
-        firebaseMethods = new FirebaseMethods(this);
+
     }
 
     private void validateUser() {
@@ -76,7 +81,7 @@ public class Register extends AppCompatActivity implements RegisterInterface {
             etPasswordConf.setError("Las contraseñas no coinciden");
             etPasswordConf.requestFocus();
         }else{
-            firebaseMethods.registerNewUser(email, password, name);
+            firebaseInterface.registerNewUser(email, password, name);
         }
 
     }
@@ -87,8 +92,8 @@ public class Register extends AppCompatActivity implements RegisterInterface {
     }
 
 
-    private void initializeView() {
-        firebaseMethods.initializeViewInterface(this);
+    private void initializeRegisterView() {
+        firebaseInterface.initializeRegisterView(this);
     }
 
 
