@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -25,7 +23,6 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -81,6 +78,16 @@ public class FirebaseMethods implements FirebaseInterface {
         this.registerInterface = registerInterface;
     }
 
+    public void logOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    @Override
+    public String getUserID() {
+        String userID = mAuth.getUid();
+        return userID;
+    }
+
     public void checkUser() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -89,6 +96,9 @@ public class FirebaseMethods implements FirebaseInterface {
 
     }
 
+    public FirebaseFirestore getDatabase(){
+        return db;
+    }
     @Override
     public void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
@@ -166,6 +176,8 @@ public class FirebaseMethods implements FirebaseInterface {
             }
         });
     }
+
+
 
 }
 

@@ -6,23 +6,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.widget.Button;
 
+import com.example.cardmates.Fragments.ChatFragment;
+import com.example.cardmates.Fragments.HomeFragment;
+import com.example.cardmates.Fragments.ProfileFragment;
 import com.example.cardmates.databinding.ActivityMainBinding;
-import com.example.cardmates.Activities.Login;
-
-import com.example.cardmates.Activities.Tags;
-import com.google.common.collect.Maps;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-
-
-    private Button btnLogOutMain;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +41,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-
-        btnCards.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Tags.class));
-            }
-        });
 
     }
 

@@ -129,7 +129,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
                 .setTitle("¿Saltar?");
         builder.setPositiveButton("Siguiente", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                startActivity(new Intent(UserProfile.this, MainActivity.class));
+                startActivity(new Intent(UserProfile.this, Tags.class));
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -171,7 +171,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
 
     @Override
     public void showInfo() {
-        startActivity(new Intent(UserProfile.this, MainActivity.class));
+        startActivity(new Intent(UserProfile.this, Tags.class));
     }
 
     @Override

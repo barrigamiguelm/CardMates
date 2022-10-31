@@ -3,47 +3,46 @@ package com.example.cardmates.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.media.Image;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.cardmates.Activities.model.Cards;
+import com.example.cardmates.Dagger.CardMatesApp;
+import com.example.cardmates.MainActivity;
 import com.example.cardmates.R;
+import com.example.cardmates.interfaces.FirebaseInterface;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
-import com.squareup.picasso.Picasso;
 
-import org.checkerframework.checker.units.qual.A;
-
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 
 public class Tags extends AppCompatActivity {
+
+    @Inject
+    FirebaseInterface firebaseInterface;
+
 
     private RecyclerView recyclerTags;
     private Context context;
@@ -68,6 +67,7 @@ public class Tags extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((CardMatesApp) getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tags);
 
@@ -76,10 +76,10 @@ public class Tags extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerTags);
         checkList = (Button) findViewById(R.id.checkList);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        userID = mAuth.getCurrentUser().getUid();
+        userID = firebaseInterface.getUserID();
+        db = firebaseInterface.getDatabase();
         context = getApplicationContext();
+
         database = FirebaseDatabase.getInstance("https://cardmates-8e17e-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference("Cards");
 
@@ -104,6 +104,7 @@ public class Tags extends AppCompatActivity {
 
                 userLikes.put("userLikes", userLikesArray);
                 documentReferenceUser.set(userLikes, SetOptions.merge());
+                startActivity(new Intent(Tags.this, MainActivity.class));
             }
 
 

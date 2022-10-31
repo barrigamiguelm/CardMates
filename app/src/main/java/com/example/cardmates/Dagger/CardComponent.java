@@ -2,9 +2,11 @@ package com.example.cardmates.Dagger;
 
 import com.example.cardmates.Activities.Login;
 import com.example.cardmates.Activities.Register;
+import com.example.cardmates.Activities.Tags;
 import com.example.cardmates.Activities.UserProfile;
 import com.example.cardmates.Dagger.Modules.AppModule;
 import com.example.cardmates.Dagger.Modules.CardModule;
+import com.example.cardmates.Fragments.HomeFragment;
 
 import javax.inject.Singleton;
 
@@ -19,4 +21,7 @@ public interface CardComponent {
 
     void inject(UserProfile userProfile);
 
+    void inject(HomeFragment homeFragment);
+
+    void inject(Tags tags);
 }
