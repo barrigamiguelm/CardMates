@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.cardmates"
-        minSdk 24
+        minSdk 26
         targetSdk 32
 
         versionCode 1

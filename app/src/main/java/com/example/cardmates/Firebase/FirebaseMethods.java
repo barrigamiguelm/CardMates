@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.cardmates.Activities.model.User;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.LoginInterface;
 import com.example.cardmates.interfaces.RegisterInterface;
@@ -22,12 +23,14 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +47,10 @@ public class FirebaseMethods implements FirebaseInterface {
     private StorageReference storageReference;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private DocumentSnapshot document;
+    private Map<String, Object> userInfo;
+
+    //TODO: no recoge la foto de perfil
 
 
     public FirebaseMethods(Context context) {
@@ -60,6 +67,10 @@ public class FirebaseMethods implements FirebaseInterface {
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+    }
+    private String getUserId(){
+        userID = mAuth.getCurrentUser().getUid();
+        return userID;
     }
 
     @Override
@@ -78,7 +89,7 @@ public class FirebaseMethods implements FirebaseInterface {
         this.registerInterface = registerInterface;
     }
 
-    public void logOut(){
+    public void logOut() {
         FirebaseAuth.getInstance().signOut();
     }
 
@@ -88,6 +99,7 @@ public class FirebaseMethods implements FirebaseInterface {
         return userID;
     }
 
+    @Override
     public void checkUser() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -96,9 +108,40 @@ public class FirebaseMethods implements FirebaseInterface {
 
     }
 
-    public FirebaseFirestore getDatabase(){
+    @Override
+    public FirebaseFirestore getDatabase() {
         return db;
     }
+
+    public void getAge() {
+
+    }
+
+    @Override
+    public Map<String, Object> provideUserInfo() {
+        Calendar today = Calendar.getInstance();
+        DocumentReference docRef = db.collection("Users").document(userID);
+        Task<DocumentSnapshot> task = docRef.get();
+        while (!task.isComplete()) {
+        }
+        document = task.getResult();
+        User user = document.toObject(User.class);
+        int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
+        userInfo = new HashMap<>();
+        userInfo.put("Nombre", user.getName());
+        userInfo.put("Desc", user.getDescription());
+        userInfo.put("Edad", String.valueOf(age));
+       //getUserPhoto();
+        return userInfo;
+    }
+
+   @Override
+    public StorageReference getStorageReference(){
+        StorageReference profilePhotos = FirebaseStorage.getInstance().getReference("ProfilePhotos/"+userID+".jpg");
+
+        return profilePhotos;
+    }
+
     @Override
     public void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
@@ -152,6 +195,7 @@ public class FirebaseMethods implements FirebaseInterface {
     }
 
 
+    @Override
     public void addAditionalInfo(String desc, String datebirth) {
         Map<String, Object> data = new HashMap<>();
         data.put("description", desc);
@@ -162,6 +206,7 @@ public class FirebaseMethods implements FirebaseInterface {
     }
 
 
+    @Override
     public void uploadPhotoFirebase(Uri imageUri) {
         StorageReference profilePhotos = storageReference.child("ProfilePhotos/" + userID);
         profilePhotos.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -176,7 +221,6 @@ public class FirebaseMethods implements FirebaseInterface {
             }
         });
     }
-
 
 
 }

@@ -3,7 +3,9 @@ package com.example.cardmates.interfaces;
 import android.net.Uri;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.Map;
 
 public interface FirebaseInterface {
     void registerNewUser(String email, String password, String username);
@@ -27,4 +29,9 @@ public interface FirebaseInterface {
     String getUserID();
 
     FirebaseFirestore getDatabase();
+
+    Map<String, Object> provideUserInfo();
+
+    StorageReference getStorageReference();
+
 }

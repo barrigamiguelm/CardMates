@@ -156,7 +156,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
 
 
     private void updateCalendar(Calendar calendar) {
-        String Format = "dd/MM/yy";
+        String Format = "yyyy/MM/dd";
         SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.ENGLISH);
         etDateBirt.setText(sdf.format(calendar.getTime()));
     }
