@@ -3,7 +3,6 @@ package com.example.cardmates.interfaces;
 import android.net.Uri;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Map;
 
@@ -32,6 +31,6 @@ public interface FirebaseInterface {
 
     Map<String, Object> provideUserInfo();
 
-    StorageReference getStorageReference();
 
+    void uploadStockPhoto(byte[] data);
 }

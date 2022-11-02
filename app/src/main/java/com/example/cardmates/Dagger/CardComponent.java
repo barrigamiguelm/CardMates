@@ -8,6 +8,7 @@ import com.example.cardmates.Dagger.Modules.AppModule;
 import com.example.cardmates.Dagger.Modules.CardModule;
 import com.example.cardmates.Fragments.HomeFragment;
 import com.example.cardmates.Fragments.ProfileFragment;
+import com.example.cardmates.MainActivity;
 
 import javax.inject.Singleton;
 
@@ -27,4 +28,5 @@ public interface CardComponent {
     void inject(Tags tags);
 
     void inject(ProfileFragment profileFragment);
+
 }

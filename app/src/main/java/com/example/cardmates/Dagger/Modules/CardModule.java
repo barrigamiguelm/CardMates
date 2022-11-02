@@ -1,7 +1,9 @@
 package com.example.cardmates.Dagger.Modules;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.example.cardmates.Activities.LoadingDialog;
 import com.example.cardmates.Activities.Register;
 import com.example.cardmates.Activities.UserProfile;
 import com.example.cardmates.Firebase.FirebaseMethods;
@@ -36,4 +38,5 @@ public class CardModule {
     UserProfileInterface userProfileInterface() {
         return new UserProfile();
     }
+
 }

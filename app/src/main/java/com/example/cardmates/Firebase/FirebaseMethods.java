@@ -41,10 +41,11 @@ public class FirebaseMethods implements FirebaseInterface {
     private LoginInterface loginInterface;
 
     private Context context;
-    private String userID;
+    private String userID, imgLink,url;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private StorageReference profilePhotos;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private DocumentSnapshot document;
@@ -68,7 +69,8 @@ public class FirebaseMethods implements FirebaseInterface {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
     }
-    private String getUserId(){
+
+    private String getUserId() {
         userID = mAuth.getCurrentUser().getUid();
         return userID;
     }
@@ -113,34 +115,49 @@ public class FirebaseMethods implements FirebaseInterface {
         return db;
     }
 
-    public void getAge() {
-
-    }
 
     @Override
     public Map<String, Object> provideUserInfo() {
         Calendar today = Calendar.getInstance();
         DocumentReference docRef = db.collection("Users").document(userID);
+
         Task<DocumentSnapshot> task = docRef.get();
-        while (!task.isComplete()) {
+
+        Task<Uri> taskUri = storageReference.child("ProfilePhotos/" + userID).getDownloadUrl();
+
+        if(!taskUri.isSuccessful()){
+
         }
+
+        while (!task.isComplete() || !taskUri.isComplete()) {
+
+        }
+
         document = task.getResult();
         User user = document.toObject(User.class);
-        int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
+
+        String url = taskUri.getResult().toString();
+
         userInfo = new HashMap<>();
-        userInfo.put("Nombre", user.getName());
-        userInfo.put("Desc", user.getDescription());
-        userInfo.put("Edad", String.valueOf(age));
-       //getUserPhoto();
+
+        if(user.getDate().equals("Sin fecha")){
+            userInfo.put("Edad", user.getDate());
+            userInfo.put("Imagen", url);
+            userInfo.put("Nombre", user.getName());
+            userInfo.put("Desc", user.getDescription());
+        }else{
+            int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
+            userInfo.put("Edad", String.valueOf(age));
+            userInfo.put("Imagen", url);
+            userInfo.put("Nombre", user.getName());
+            userInfo.put("Desc", user.getDescription());
+        }
+
         return userInfo;
     }
 
-   @Override
-    public StorageReference getStorageReference(){
-        StorageReference profilePhotos = FirebaseStorage.getInstance().getReference("ProfilePhotos/"+userID+".jpg");
 
-        return profilePhotos;
-    }
+
 
     @Override
     public void loginUser(String email, String password) {
@@ -149,7 +166,6 @@ public class FirebaseMethods implements FirebaseInterface {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             loginInterface.openMain();
                         } else {
@@ -189,9 +205,9 @@ public class FirebaseMethods implements FirebaseInterface {
                         Log.e("TAG", e.getMessage());
                     }
                 }
+
             }
         });
-
     }
 
 
@@ -201,14 +217,19 @@ public class FirebaseMethods implements FirebaseInterface {
         data.put("description", desc);
         data.put("Date", datebirth);
         db.collection("Users").document(userID).set(data, SetOptions.merge());
-
         userProfileInterface.showInfo();
+    }
+
+    @Override
+    public void uploadStockPhoto(byte[] data) {
+        profilePhotos = storageReference.child("ProfilePhotos/" + userID);
+        profilePhotos.putBytes(data);
     }
 
 
     @Override
     public void uploadPhotoFirebase(Uri imageUri) {
-        StorageReference profilePhotos = storageReference.child("ProfilePhotos/" + userID);
+        profilePhotos = storageReference.child("ProfilePhotos/" + userID);
         profilePhotos.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

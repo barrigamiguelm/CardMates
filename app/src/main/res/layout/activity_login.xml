@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Login"
-    >
+    tools:context=".Activities.Login">
+
+
 
 
     <ImageView
@@ -18,24 +19,24 @@
         app:layout_constraintTop_toTopOf="@+id/top_guideline" />
 
     <TextView
-        android:textColor="@color/black"
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
         android:text="Login"
+        android:textColor="@color/black"
         android:textSize="35dp"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toTopOf="@+id/top_guideline" />
 
     <TextView
-        android:textColor="@color/black"
         android:id="@+id/tvLogin2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inicia sesion para continuar"
-        android:textSize="15dp"
         android:layout_marginTop="10dp"
+        android:text="Inicia sesion para continuar"
+        android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
 
@@ -67,8 +68,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Contraseña"
         android:layout_marginTop="12dp"
+        android:hint="Contraseña"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toBottomOf="@+id/etEmailInput">
@@ -105,8 +106,8 @@
 
         android:layout_height="wrap_content"
         android:text="¿No tienes cuenta? Registrate aquí."
-        android:textSize="13dp"
         android:textColor="@color/black"
+        android:textSize="13dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline" />
