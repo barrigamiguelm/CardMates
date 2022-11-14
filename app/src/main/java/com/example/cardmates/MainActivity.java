@@ -27,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        replaceFragment(new ChatFragment());
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.chat:
-                    replaceFragment(new ChatFragment());
+                    replaceFragment(new MapsFragment2());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());
