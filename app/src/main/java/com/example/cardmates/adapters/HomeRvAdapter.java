@@ -10,15 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cardmates.Activities.model.User;
 import com.example.cardmates.R;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.util.ArrayList;
 
 public class HomeRvAdapter
-        extends RecyclerView.Adapter<HomeRvAdapter.MyViewHolder> {
+        extends FirestoreRecyclerAdapter<User, HomeRvAdapter.MyViewHolder> {
 
     private ArrayList<User> usersList;
 
-    public HomeRvAdapter(ArrayList<User> usersList) {
+    public HomeRvAdapter(@NonNull FirestoreRecyclerOptions<User> options, ArrayList<User> usersList) {
+        super(options);
         this.usersList = usersList;
     }
 
@@ -31,7 +34,7 @@ public class HomeRvAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull User model) {
         holder.name.setText(usersList.get(position).getName());
         holder.description.setText(usersList.get(position).getDescription());
     }
