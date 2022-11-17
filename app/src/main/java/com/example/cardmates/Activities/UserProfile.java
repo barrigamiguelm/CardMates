@@ -9,6 +9,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,13 +21,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cardmates.Dagger.CardMatesApp;
-import com.example.cardmates.Firebase.FirebaseMethods;
-import com.example.cardmates.MainActivity;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.UserProfileInterface;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -40,6 +41,8 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
     private TextView tvUserNameUserProfile;
     private ImageView profilePhotoUserProfile;
     private Button btnCreateUser, btnSkipUserProfile;
+    private LoadingDialog loadingDialog;
+    private String desc = "Sin descripcion", dateBirth = "Sin fecha";
     private Uri imageUri;
 
     @Inject
@@ -96,9 +99,9 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         btnCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String desc = etUserDesc.getText().toString();
-                String datebirth = etDateBirt.getText().toString();
-                firebaseInterface.addAditionalInfo(desc, datebirth);
+                desc = etUserDesc.getText().toString();
+                dateBirth = etDateBirt.getText().toString();
+                firebaseInterface.addAditionalInfo(desc, dateBirth);
             }
         });
 
@@ -117,6 +120,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         etUserDesc = (EditText) findViewById(R.id.etUserDesc);
         tvUserNameUserProfile = (TextView) findViewById(R.id.tvUserNameUserProfile);
         profilePhotoUserProfile = (ImageView) findViewById(R.id.profilePhotoUserProfile);
+        loadingDialog = new LoadingDialog(this);
         Bundle bundle = getIntent().getExtras();
         String name = bundle.getString("name");
         tvUserNameUserProfile.setText(name);
@@ -129,6 +133,8 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
                 .setTitle("¿Saltar?");
         builder.setPositiveButton("Siguiente", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                firebaseInterface.addAditionalInfo(desc, dateBirth);
+                uploadStockPhoto();
                 startActivity(new Intent(UserProfile.this, Tags.class));
             }
         });
@@ -138,6 +144,16 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void uploadStockPhoto() {
+        profilePhotoUserProfile.setDrawingCacheEnabled(true);
+        profilePhotoUserProfile.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) profilePhotoUserProfile.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        firebaseInterface.uploadStockPhoto(data);
     }
 
 
@@ -150,13 +166,14 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
+                    loadingDialog.showDialog();
                     firebaseInterface.uploadPhotoFirebase(uri);
                 }
             });
 
 
     private void updateCalendar(Calendar calendar) {
-        String Format = "dd/MM/yy";
+        String Format = "yyyy/MM/dd";
         SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.ENGLISH);
         etDateBirt.setText(sdf.format(calendar.getTime()));
     }
@@ -164,6 +181,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
 
     @Override
     public void setPhoto(Uri imageUri) {
+        loadingDialog.hideDialog();
         Snackbar.make(findViewById(android.R.id.content), "Foto de perfil subida", Snackbar.LENGTH_LONG).show();
         profilePhotoUserProfile.setImageURI(imageUri);
     }

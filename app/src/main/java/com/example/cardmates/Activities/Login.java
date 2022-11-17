@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.cardmates.Dagger.CardMatesApp;
 import com.example.cardmates.MainActivity;
 import com.example.cardmates.R;
@@ -22,6 +23,7 @@ public class Login extends AppCompatActivity implements LoginInterface {
 
     private EditText etPassword, etEmail;
     private Button btnLogin, btnRegister;
+    private LoadingDialog loadingDialog;
 
     @Inject
     FirebaseInterface firebaseInterface;
@@ -32,7 +34,6 @@ public class Login extends AppCompatActivity implements LoginInterface {
         ((CardMatesApp) getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        overridePendingTransition(R.anim.alante, R.anim.atras);
 
         initializeUserProfileInterface();
         initializeAll();
@@ -62,6 +63,7 @@ public class Login extends AppCompatActivity implements LoginInterface {
         etEmail = (EditText) findViewById(R.id.etEmail);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRegister = (Button) findViewById(R.id.btnRegister);
+        loadingDialog = new LoadingDialog(this);
     }
 
 
@@ -75,7 +77,9 @@ public class Login extends AppCompatActivity implements LoginInterface {
             etPassword.setError("Introduce una contraseña");
             etPassword.requestFocus();
         } else {
+            loadingDialog.showDialog();
             firebaseInterface.loginUser(email, password);
+            loadingDialog.hideDialog();
         }
     }
 
