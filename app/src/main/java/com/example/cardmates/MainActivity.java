@@ -7,6 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import android.widget.Button;
+
+import com.example.cardmates.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
+
+
 import com.example.cardmates.Activities.LoadingDialog;
 import com.example.cardmates.Dagger.CardMatesApp;
 import com.example.cardmates.Fragments.ChatFragment;
@@ -16,6 +22,7 @@ import com.example.cardmates.databinding.ActivityMainBinding;
 
 import javax.inject.Inject;
 
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
@@ -23,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        replaceFragment(new ChatFragment());
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
 
@@ -35,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.chat:
-                    replaceFragment(new ChatFragment());
+                    replaceFragment(new MapsFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());
