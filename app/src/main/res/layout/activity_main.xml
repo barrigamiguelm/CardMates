@@ -19,6 +19,5 @@
             app:menu="@menu/bottom_nav_menu" />
     </FrameLayout>
 
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

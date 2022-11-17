@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.cardmates.Dagger.CardMatesApp;
-import com.example.cardmates.Firebase.FirebaseMethods;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.RegisterInterface;
@@ -24,7 +23,7 @@ public class Register extends AppCompatActivity implements RegisterInterface {
 
     private Button btnRegisterRegister, btnLoginRegister;
     private EditText etPasswordConf, etPasswordRegister, etEmailRegister, etUserName;
-
+    private LoadingDialog loadingDialog;
     @Inject
     FirebaseInterface firebaseInterface;
 
@@ -34,7 +33,6 @@ public class Register extends AppCompatActivity implements RegisterInterface {
         ((CardMatesApp) getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        overridePendingTransition(R.anim.atras, R.anim.alante);
         initializeAll();
         initializeRegisterView();
 
@@ -62,7 +60,7 @@ public class Register extends AppCompatActivity implements RegisterInterface {
         etPasswordRegister = (EditText) findViewById(R.id.etPasswordRegister);
         etEmailRegister = (EditText) findViewById(R.id.etEmailRegister);
         etUserName = (EditText) findViewById(R.id.etUserName);
-
+        loadingDialog = new LoadingDialog(this);
     }
 
     private void validateUser() {
@@ -80,7 +78,8 @@ public class Register extends AppCompatActivity implements RegisterInterface {
         } else if (!passwordconfirm.equals(password)) {
             etPasswordConf.setError("Las contraseñas no coinciden");
             etPasswordConf.requestFocus();
-        }else{
+        } else {
+            loadingDialog.showDialog();
             firebaseInterface.registerNewUser(email, password, name);
         }
 
@@ -99,18 +98,21 @@ public class Register extends AppCompatActivity implements RegisterInterface {
 
     @Override
     public void showErrorEmail() {
+        loadingDialog.hideDialog();
         etEmailRegister.setError("El correo ya esta en uso");
         etEmailRegister.requestFocus();
     }
 
     @Override
     public void showErrorWeakPassword() {
+        loadingDialog.hideDialog();
         etPasswordRegister.setError("La contraseña es demasiado debil");
         etPasswordRegister.requestFocus();
     }
 
     @Override
     public void showUserRegister() {
+        loadingDialog.hideDialog();
         Snackbar.make(findViewById(android.R.id.content), "Usuario registrado", Snackbar.LENGTH_LONG).show();
         Intent intent = new Intent(Register.this, UserProfile.class);
         intent.putExtra("name", etUserName.getText().toString());
