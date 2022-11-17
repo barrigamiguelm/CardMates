@@ -15,14 +15,18 @@ import android.widget.Adapter;
 import android.widget.Button;
 
 import com.example.cardmates.Activities.Login;
+import com.example.cardmates.Activities.model.Cards;
 import com.example.cardmates.Activities.model.User;
 import com.example.cardmates.Dagger.CardMatesApp;
 import com.example.cardmates.R;
 import com.example.cardmates.adapters.HomeRvAdapter;
 import com.example.cardmates.interfaces.FirebaseInterface;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
@@ -34,12 +38,10 @@ public class HomeFragment extends Fragment {
     FirebaseInterface firebaseInterface;
 
     private Button logOut;
-    private ArrayList<User> usersList;
     private Context context;
 
     private FirebaseFirestore db;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -62,13 +64,19 @@ public class HomeFragment extends Fragment {
 
         logOut = (Button) view.findViewById(R.id.logOut);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        usersList = new ArrayList<>();
 
-        //HomeRvAdapter recyclerViewAdapter = new HomeRvAdapter(usersList);
+        db = firebaseInterface.getDatabase();
+
+        Query query = db.collection("Users");
+        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+
+        HomeRvAdapter recyclerViewAdapter = new HomeRvAdapter(options);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        //recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setAdapter(recyclerViewAdapter);
 
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override

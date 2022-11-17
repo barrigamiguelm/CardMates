@@ -13,16 +13,11 @@ import com.example.cardmates.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.util.ArrayList;
-
 public class HomeRvAdapter
         extends FirestoreRecyclerAdapter<User, HomeRvAdapter.MyViewHolder> {
 
-    private ArrayList<User> usersList;
-
-    public HomeRvAdapter(@NonNull FirestoreRecyclerOptions<User> options, ArrayList<User> usersList) {
+    public HomeRvAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
         super(options);
-        this.usersList = usersList;
     }
 
     @NonNull
@@ -35,13 +30,8 @@ public class HomeRvAdapter
 
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull User model) {
-        holder.name.setText(usersList.get(position).getName());
-        holder.description.setText(usersList.get(position).getDescription());
-    }
-
-    @Override
-    public int getItemCount() {
-        return usersList.size();
+        holder.name.setText(model.getName());
+        holder.description.setText(model.getDescription());
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
