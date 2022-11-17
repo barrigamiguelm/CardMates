@@ -7,20 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
-import android.widget.Button;
-
-import com.example.cardmates.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
-
-
-import com.example.cardmates.Activities.LoadingDialog;
-import com.example.cardmates.Dagger.CardMatesApp;
-import com.example.cardmates.Fragments.ChatFragment;
-import com.example.cardmates.Fragments.HomeFragment;
-import com.example.cardmates.Fragments.ProfileFragment;
 import com.example.cardmates.databinding.ActivityMainBinding;
 
-import javax.inject.Inject;
+
+import com.example.cardmates.fragments.ChatFragment;
+import com.example.cardmates.fragments.HomeFragment;
+import com.example.cardmates.fragments.ProfileFragment;
 
 
 public class MainActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.cardmates.Dagger.Modules;
+package com.example.cardmates.dagger.modules;
 
 import android.app.Application;
 

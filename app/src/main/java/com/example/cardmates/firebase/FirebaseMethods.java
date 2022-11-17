@@ -1,15 +1,14 @@
-package com.example.cardmates.Firebase;
+package com.example.cardmates.firebase;
 
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.cardmates.Activities.model.User;
+import com.example.cardmates.model.User;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.LoginInterface;
 import com.example.cardmates.interfaces.ProfileEditInterface;

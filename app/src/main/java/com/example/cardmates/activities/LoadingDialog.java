@@ -1,4 +1,4 @@
-package com.example.cardmates.Activities;
+package com.example.cardmates.activities;
 
 import android.app.Dialog;
 import android.content.Context;

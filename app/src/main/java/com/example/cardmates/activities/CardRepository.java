@@ -1,9 +1,9 @@
-package com.example.cardmates.Activities;
+package com.example.cardmates.activities;
 
 import android.app.Application;
 import android.content.Context;
 
-import com.example.cardmates.Activities.model.Cards;
+import com.example.cardmates.model.Cards;
 import com.example.cardmates.R;
 import com.google.gson.Gson;
 
@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.inject.Inject;
 
 public class CardRepository {
 

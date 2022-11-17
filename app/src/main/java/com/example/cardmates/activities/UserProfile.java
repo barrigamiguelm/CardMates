@@ -1,4 +1,4 @@
-package com.example.cardmates.Activities;
+package com.example.cardmates.activities;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.cardmates.Dagger.CardMatesApp;
+import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.UserProfileInterface;

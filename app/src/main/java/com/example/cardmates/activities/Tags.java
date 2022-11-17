@@ -1,4 +1,4 @@
-package com.example.cardmates.Activities;
+package com.example.cardmates.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.cardmates.Activities.model.Cards;
-import com.example.cardmates.Dagger.CardMatesApp;
+import com.example.cardmates.model.Cards;
+import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.MainActivity;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;

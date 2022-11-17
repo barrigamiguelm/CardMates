@@ -1,4 +1,4 @@
-package com.example.cardmates.Activities;
+package com.example.cardmates.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.cardmates.Dagger.CardMatesApp;
+import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.RegisterInterface;

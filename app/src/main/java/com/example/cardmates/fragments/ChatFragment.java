@@ -1,4 +1,4 @@
-package com.example.cardmates.Fragments;
+package com.example.cardmates.fragments;
 
 import android.os.Bundle;
 

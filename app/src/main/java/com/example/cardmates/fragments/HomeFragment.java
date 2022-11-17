@@ -1,4 +1,4 @@
-package com.example.cardmates.Fragments;
+package com.example.cardmates.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,27 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 
-import com.example.cardmates.Activities.Login;
-import com.example.cardmates.Activities.model.Cards;
-import com.example.cardmates.Activities.model.User;
-import com.example.cardmates.Dagger.CardMatesApp;
+import com.example.cardmates.activities.Login;
+import com.example.cardmates.model.User;
+import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
 import com.example.cardmates.adapters.HomeRvAdapter;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import org.checkerframework.common.returnsreceiver.qual.This;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 

@@ -1,12 +1,10 @@
-package com.example.cardmates.Dagger.Modules;
+package com.example.cardmates.dagger.modules;
 
 import android.app.Application;
-import android.content.Context;
 
-import com.example.cardmates.Activities.LoadingDialog;
-import com.example.cardmates.Activities.Register;
-import com.example.cardmates.Activities.UserProfile;
-import com.example.cardmates.Firebase.FirebaseMethods;
+import com.example.cardmates.activities.Register;
+import com.example.cardmates.activities.UserProfile;
+import com.example.cardmates.firebase.FirebaseMethods;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.RegisterInterface;
 import com.example.cardmates.interfaces.UserProfileInterface;

@@ -1,4 +1,4 @@
-package com.example.cardmates.Fragments;
+package com.example.cardmates.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.cardmates.Activities.LoadingDialog;
-import com.example.cardmates.Activities.ProfileEdit;
-import com.example.cardmates.Dagger.CardMatesApp;
+import com.example.cardmates.activities.LoadingDialog;
+import com.example.cardmates.activities.ProfileEdit;
+import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;
 

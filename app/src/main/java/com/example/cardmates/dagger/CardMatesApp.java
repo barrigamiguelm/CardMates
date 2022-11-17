@@ -1,9 +1,9 @@
-package com.example.cardmates.Dagger;
+package com.example.cardmates.dagger;
 
 import android.app.Application;
 
-import com.example.cardmates.Dagger.Modules.AppModule;
-import com.example.cardmates.Dagger.Modules.CardModule;
+import com.example.cardmates.dagger.modules.AppModule;
+import com.example.cardmates.dagger.modules.CardModule;
 
 public class CardMatesApp extends Application {
 

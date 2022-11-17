@@ -1,4 +1,4 @@
-package com.example.cardmates.Activities.model;
+package com.example.cardmates.model;
 
 public class User {
 
