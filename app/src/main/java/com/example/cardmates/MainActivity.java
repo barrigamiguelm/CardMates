@@ -5,17 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.cardmates.Activities.Login;
 import com.example.cardmates.databinding.ActivityMainBinding;
-import com.google.common.collect.Maps;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.chat:
-                    replaceFragment(new MapsFragment2());
+                    replaceFragment(new MapsFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());
