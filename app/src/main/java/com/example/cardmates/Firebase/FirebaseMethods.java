@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import com.example.cardmates.Activities.model.User;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.LoginInterface;
+import com.example.cardmates.interfaces.ProfileEditInterface;
 import com.example.cardmates.interfaces.RegisterInterface;
 import com.example.cardmates.interfaces.UserProfileInterface;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,9 +41,10 @@ public class FirebaseMethods implements FirebaseInterface {
     private RegisterInterface registerInterface;
     private UserProfileInterface userProfileInterface;
     private LoginInterface loginInterface;
+    private ProfileEditInterface profileEditInterface;
 
     private Context context;
-    private String userID, imgLink,url;
+    private String userID, imgLink, url;
 
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -70,14 +73,15 @@ public class FirebaseMethods implements FirebaseInterface {
         storageReference = storage.getReference();
     }
 
-    private String getUserId() {
-        userID = mAuth.getCurrentUser().getUid();
-        return userID;
-    }
 
     @Override
     public void initializeUserProfileInterface(UserProfileInterface userProfileInterface) {
         this.userProfileInterface = userProfileInterface;
+    }
+
+    @Override
+    public void initializeProfileEditInterface(ProfileEditInterface profileEditInterface) {
+        this.profileEditInterface = profileEditInterface;
     }
 
     @Override
@@ -125,7 +129,7 @@ public class FirebaseMethods implements FirebaseInterface {
 
         Task<Uri> taskUri = storageReference.child("ProfilePhotos/" + userID).getDownloadUrl();
 
-        if(!taskUri.isSuccessful()){
+        if (!taskUri.isSuccessful()) {
 
         }
 
@@ -140,14 +144,15 @@ public class FirebaseMethods implements FirebaseInterface {
 
         userInfo = new HashMap<>();
 
-        if(user.getDate().equals("Sin fecha")){
+        if (user.getDate().equals("Sin fecha")) {
             userInfo.put("Edad", user.getDate());
             userInfo.put("Imagen", url);
             userInfo.put("Nombre", user.getName());
             userInfo.put("Desc", user.getDescription());
-        }else{
+        } else {
             int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
             userInfo.put("Edad", String.valueOf(age));
+            userInfo.put("Fecha", user.getDate());
             userInfo.put("Imagen", url);
             userInfo.put("Nombre", user.getName());
             userInfo.put("Desc", user.getDescription());
@@ -155,8 +160,6 @@ public class FirebaseMethods implements FirebaseInterface {
 
         return userInfo;
     }
-
-
 
 
     @Override
@@ -221,9 +224,36 @@ public class FirebaseMethods implements FirebaseInterface {
     }
 
     @Override
+    public void editUserInfo(String desc, String datebirth, String name) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("description", desc);
+        data.put("Date", datebirth);
+        data.put("Name", name);
+        db.collection("Users").document(userID).set(data, SetOptions.merge());
+    }
+
+
+    @Override
     public void uploadStockPhoto(byte[] data) {
         profilePhotos = storageReference.child("ProfilePhotos/" + userID);
         profilePhotos.putBytes(data);
+    }
+
+    public void editPhotoUser(Uri imageUri) {
+        profilePhotos = storageReference.child("ProfilePhotos/" + userID);
+        profilePhotos.delete();
+
+        profilePhotos.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                profileEditInterface.setSnackBarSuccess();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                profileEditInterface.setErrorPhoto();
+            }
+        });
     }
 
 

@@ -13,6 +13,8 @@ public interface FirebaseInterface {
 
     void initializeRegisterView(RegisterInterface registerInterface);
 
+    void initializeProfileEditInterface(ProfileEditInterface profileEditInterface);
+
     void initializeUserProfileInterface(UserProfileInterface userProfileInterface);
 
     void initializeLoginInterface(LoginInterface loginInterface);
@@ -21,7 +23,11 @@ public interface FirebaseInterface {
 
     void addAditionalInfo(String desc, String datebirth);
 
+    void editUserInfo(String desc, String datebirth,String name);
+
     void uploadPhotoFirebase(Uri imageUri);
+
+    void editPhotoUser(Uri imageUri);
 
     void logOut();
 

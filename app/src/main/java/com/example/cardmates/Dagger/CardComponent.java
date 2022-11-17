@@ -1,6 +1,7 @@
 package com.example.cardmates.Dagger;
 
 import com.example.cardmates.Activities.Login;
+import com.example.cardmates.Activities.ProfileEdit;
 import com.example.cardmates.Activities.Register;
 import com.example.cardmates.Activities.Tags;
 import com.example.cardmates.Activities.UserProfile;
@@ -29,4 +30,5 @@ public interface CardComponent {
 
     void inject(ProfileFragment profileFragment);
 
+    void inject(ProfileEdit profileEdit);
 }

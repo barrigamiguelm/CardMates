@@ -1,5 +1,6 @@
 package com.example.cardmates.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.cardmates.Activities.LoadingDialog;
+import com.example.cardmates.Activities.ProfileEdit;
 import com.example.cardmates.Dagger.CardMatesApp;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;
@@ -41,8 +43,6 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         ((CardMatesApp) getActivity().getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
-
-
     }
 
 
@@ -53,16 +53,21 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        btnEditarPerfil = (Button) view.findViewById(R.id.btnEditarPerfil);
-        tvDes = (TextView) view.findViewById(R.id.tvDes);
-        tvName = (TextView) view.findViewById(R.id.tvName);
-        tvEdad = (TextView) view.findViewById(R.id.tvEdad);
-        imgUser = (ImageView) view.findViewById(R.id.imgUser);
-
+        btnEditarPerfil = view.findViewById(R.id.btnEditarPerfil);
+        tvDes = view.findViewById(R.id.tvDes);
+        tvName = view.findViewById(R.id.tvName);
+        tvEdad = view.findViewById(R.id.tvEdad);
+        imgUser = view.findViewById(R.id.imgUser);
 
         completar();
 
-
+        btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ProfileEdit.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -81,6 +86,7 @@ public class ProfileFragment extends Fragment {
         Glide.with(this)
                 .load(userInfo.get("Imagen"))
                 .into(imgUser);
+
     }
 
 }
