@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <application
+        android:name=".Dagger.CardMatesApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -20,9 +21,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
-        <activity
+
+      <activity
+            android:name=".Activities.ProfileEdit"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        
+         <activity
             android:name=".MapsFragment"
             android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        
+        
+        <activity
+            android:name=".Activities.Tags"
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -4,15 +4,17 @@ public class User {
 
     private String user_id;
     private String Email;
-    private String Usuario;
+    private String Name;
+    private String Date;
+    private String Description;
 
-    public User(String user_id, String email, String username) {
+    public User(){}
+    public User(String user_id, String email, String name, String date, String description) {
         this.user_id = user_id;
-        this.Email = email;
-        this.Usuario = username;
-    }
-    public User(){
-
+        Email = email;
+        Name = name;
+        Date = date;
+        Description = description;
     }
 
     public String getUser_id() {
@@ -28,24 +30,30 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.Email = email;
+        Email = email;
     }
 
-    public String getUsername() {
-        return Usuario;
+    public String getName() {
+        return Name;
     }
 
-    public void setUsername(String username) {
-        this.Usuario = username;
+    public void setName(String name) {
+        Name = name;
     }
 
+    public String getDate() {
+        return Date;
+    }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "user_id='" + user_id + '\'' +
-                ", email='" + Email + '\'' +
-                ", username='" + Usuario + '\'' +
-                '}';
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
     }
 }

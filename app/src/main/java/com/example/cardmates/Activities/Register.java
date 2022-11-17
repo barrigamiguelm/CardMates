@@ -9,29 +9,32 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.cardmates.Firebase.FirebaseMethods;
+import com.example.cardmates.Dagger.CardMatesApp;
 import com.example.cardmates.R;
+import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.RegisterInterface;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import javax.inject.Inject;
 
 
 public class Register extends AppCompatActivity implements RegisterInterface {
 
     private Button btnRegisterRegister, btnLoginRegister;
     private EditText etPasswordConf, etPasswordRegister, etEmailRegister, etUserName;
-    private FirebaseMethods firebaseMethods;
+    private LoadingDialog loadingDialog;
+    @Inject
+    FirebaseInterface firebaseInterface;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((CardMatesApp) getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        overridePendingTransition(R.anim.atras, R.anim.alante);
-
         initializeAll();
-        initializeView();
+        initializeRegisterView();
 
 
         btnRegisterRegister.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +60,7 @@ public class Register extends AppCompatActivity implements RegisterInterface {
         etPasswordRegister = (EditText) findViewById(R.id.etPasswordRegister);
         etEmailRegister = (EditText) findViewById(R.id.etEmailRegister);
         etUserName = (EditText) findViewById(R.id.etUserName);
-        firebaseMethods = new FirebaseMethods(this);
+        loadingDialog = new LoadingDialog(this);
     }
 
     private void validateUser() {
@@ -75,8 +78,9 @@ public class Register extends AppCompatActivity implements RegisterInterface {
         } else if (!passwordconfirm.equals(password)) {
             etPasswordConf.setError("Las contraseñas no coinciden");
             etPasswordConf.requestFocus();
-        }else{
-            firebaseMethods.registerNewUser(email, password, name);
+        } else {
+            loadingDialog.showDialog();
+            firebaseInterface.registerNewUser(email, password, name);
         }
 
     }
@@ -87,25 +91,28 @@ public class Register extends AppCompatActivity implements RegisterInterface {
     }
 
 
-    private void initializeView() {
-        firebaseMethods.initializeViewInterface(this);
+    private void initializeRegisterView() {
+        firebaseInterface.initializeRegisterView(this);
     }
 
 
     @Override
     public void showErrorEmail() {
+        loadingDialog.hideDialog();
         etEmailRegister.setError("El correo ya esta en uso");
         etEmailRegister.requestFocus();
     }
 
     @Override
     public void showErrorWeakPassword() {
+        loadingDialog.hideDialog();
         etPasswordRegister.setError("La contraseña es demasiado debil");
         etPasswordRegister.requestFocus();
     }
 
     @Override
     public void showUserRegister() {
+        loadingDialog.hideDialog();
         Snackbar.make(findViewById(android.R.id.content), "Usuario registrado", Snackbar.LENGTH_LONG).show();
         Intent intent = new Intent(Register.this, UserProfile.class);
         intent.putExtra("name", etUserName.getText().toString());
