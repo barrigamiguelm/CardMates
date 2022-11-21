@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--TODO: Change FrameLayout width to match_parent -->
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="wrap_content"
