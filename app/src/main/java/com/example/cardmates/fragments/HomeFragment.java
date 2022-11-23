@@ -101,7 +101,12 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
     private void search(String searchText){
-        query = ref.whereEqualTo("Localidad", searchText);
+        if (!searchText.isEmpty()){
+            query = ref.whereEqualTo("Localidad", searchText);
+        } else {
+            query = ref;
+        }
+
         setRecyclerViewAdapter(query);
     }
 
