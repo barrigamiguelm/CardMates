@@ -3,10 +3,12 @@ package com.example.cardmates.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,18 +28,18 @@ import com.google.firebase.firestore.Query;
 
 import javax.inject.Inject;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     @Inject
     FirebaseInterface firebaseInterface;
 
     private Button logOut;
     private Context context;
-    private TextInputLayout tilSearch;
-    private EditText search;
+    private SearchView txtSearch;
 
     private Query query;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final CollectionReference ref = db.collection("Users");
     private RecyclerView recyclerView;
     private HomeRvAdapter recyclerViewAdapter;
 
@@ -60,10 +62,10 @@ public class HomeFragment extends Fragment {
         //logOut = (Button) view.findViewById(R.id.logOut);
 
         initialize(view);
-        String stringSearch = search.getText().toString();
         listUsers();
 
         setRecyclerViewAdapter(query);
+        txtSearch.setOnQueryTextListener(this);
 
         /*logOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,15 +82,11 @@ public class HomeFragment extends Fragment {
 
     private void initialize(View view){
         recyclerView = view.findViewById(R.id.recyclerView);
-        search = view.findViewById(R.id.etSearch);
-        tilSearch = view.findViewById(R.id.tilSearch);
+        txtSearch = view.findViewById(R.id.txtSearch);
     }
 
     private void listUsers(){
-
-        CollectionReference ref = db.collection("Users");
-        query = ref.whereEqualTo("Localidad", "Madrid");
-        //query = db.collection("Users");
+        query = ref;
     }
 
     private void setRecyclerViewAdapter(Query query) {
@@ -99,6 +97,12 @@ public class HomeFragment extends Fragment {
         recyclerViewAdapter = new HomeRvAdapter(options);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.startListening();
+    }
+
+    private void search(String searchText){
+        query = ref.whereEqualTo("Localidad", searchText);
+        setRecyclerViewAdapter(query);
     }
 
     @Override
@@ -111,6 +115,19 @@ public class HomeFragment extends Fragment {
     public void onStop(){
         super.onStop();
         recyclerViewAdapter.stopListening();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        Log.e("Search", newText);
+
+        search(newText);
+        return true;
     }
 
 }
