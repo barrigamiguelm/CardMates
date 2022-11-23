@@ -19,6 +19,8 @@ import com.example.cardmates.R;
 import com.example.cardmates.adapters.HomeRvAdapter;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -31,6 +33,7 @@ public class HomeFragment extends Fragment {
 
     private Button logOut;
     private Context context;
+    private TextInputLayout tilSearch;
     private EditText search;
 
     private Query query;
@@ -56,7 +59,6 @@ public class HomeFragment extends Fragment {
 
         //logOut = (Button) view.findViewById(R.id.logOut);
 
-
         initialize(view);
         String stringSearch = search.getText().toString();
         listUsers();
@@ -71,6 +73,7 @@ public class HomeFragment extends Fragment {
             }
         });*/
 
+
         return view;
 
     }
@@ -78,10 +81,14 @@ public class HomeFragment extends Fragment {
     private void initialize(View view){
         recyclerView = view.findViewById(R.id.recyclerView);
         search = view.findViewById(R.id.etSearch);
+        tilSearch = view.findViewById(R.id.tilSearch);
     }
 
     private void listUsers(){
-        query = db.collection("Users");
+
+        CollectionReference ref = db.collection("Users");
+        query = ref.whereEqualTo("Localidad", "Madrid");
+        //query = db.collection("Users");
     }
 
     private void setRecyclerViewAdapter(Query query) {
