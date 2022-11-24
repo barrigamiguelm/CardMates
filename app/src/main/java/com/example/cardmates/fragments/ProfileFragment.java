@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.cardmates.activities.LoadingDialog;
+import com.example.cardmates.activities.Login;
 import com.example.cardmates.activities.ProfileEdit;
 import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
@@ -29,7 +30,7 @@ public class ProfileFragment extends Fragment {
     FirebaseInterface firebaseInterface;
 
     private Map<String, Object> userInfo;
-    private Button btnEditarPerfil;
+    private Button btnEditarPerfil,btnLogOut;
     private TextView tvDes, tvName, tvEdad;
     private ImageView imgUser;
     private LoadingDialog loadingDialog;
@@ -58,6 +59,7 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvEdad = view.findViewById(R.id.tvEdad);
         imgUser = view.findViewById(R.id.imgUser);
+        btnLogOut = view.findViewById(R.id.btnLogOut);
 
         completar();
 
@@ -66,6 +68,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ProfileEdit.class);
                 startActivity(intent);
+            }
+        });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseInterface.logOut();
+                startActivity(new Intent(getActivity(), Login.class));
             }
         });
         return view;

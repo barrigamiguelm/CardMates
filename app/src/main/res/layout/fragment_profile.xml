@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
+    <Button
+        android:id="@+id/btnLogOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="logout"
+        tools:layout_editor_absoluteY="492dp"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/tvEdad"
         android:layout_width="0dp"

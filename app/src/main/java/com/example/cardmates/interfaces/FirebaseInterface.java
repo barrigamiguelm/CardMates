@@ -17,19 +17,23 @@ public interface FirebaseInterface {
 
     void initializeUserProfileInterface(UserProfileInterface userProfileInterface);
 
+    void initializeMainInterface(MainInterface mainInterface);
+
     void initializeLoginInterface(LoginInterface loginInterface);
 
     void checkUser();
 
     void addAditionalInfo(String desc, String datebirth);
 
-    void editUserInfo(String desc, String datebirth,String name);
+    void editUserInfo(String desc, String datebirth, String name);
 
     void uploadPhotoFirebase(Uri imageUri);
 
     void editPhotoUser(Uri imageUri);
 
     void logOut();
+
+    void getToken();
 
     String getUserID();
 

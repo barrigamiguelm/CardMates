@@ -13,6 +13,8 @@ import com.example.cardmates.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import javax.inject.Inject;
+
 public class HomeRvAdapter
         extends FirestoreRecyclerAdapter<User, HomeRvAdapter.MyViewHolder> {
 
@@ -32,6 +34,7 @@ public class HomeRvAdapter
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull User model) {
         holder.name.setText(model.getName());
         holder.description.setText(model.getDescription());
+
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

@@ -5,9 +5,12 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.cardmates.MainActivity;
+import com.example.cardmates.interfaces.MainInterface;
 import com.example.cardmates.model.User;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.LoginInterface;
@@ -25,8 +28,12 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.TransactionOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,6 +48,7 @@ public class FirebaseMethods implements FirebaseInterface {
     private UserProfileInterface userProfileInterface;
     private LoginInterface loginInterface;
     private ProfileEditInterface profileEditInterface;
+    private MainInterface mainInterface;
 
     private Context context;
     private String userID, imgLink, url;
@@ -67,6 +75,9 @@ public class FirebaseMethods implements FirebaseInterface {
 
     private void setUpFirebaseAuth() {
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            userID = mAuth.getCurrentUser().getUid();
+        }
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -76,6 +87,11 @@ public class FirebaseMethods implements FirebaseInterface {
     @Override
     public void initializeUserProfileInterface(UserProfileInterface userProfileInterface) {
         this.userProfileInterface = userProfileInterface;
+    }
+
+    @Override
+    public void initializeMainInterface(MainInterface mainInterface) {
+        this.mainInterface = mainInterface;
     }
 
     @Override
@@ -95,6 +111,11 @@ public class FirebaseMethods implements FirebaseInterface {
     }
 
     public void logOut() {
+        DocumentReference documentReference = db.collection("Users").document(userID);
+        HashMap<String, Object> update = new HashMap<>();
+        update.put("token", FieldValue.delete());
+        documentReference.update(update);
+
         FirebaseAuth.getInstance().signOut();
     }
 
@@ -272,6 +293,16 @@ public class FirebaseMethods implements FirebaseInterface {
         });
     }
 
+    public void getToken(){
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+
+    public void updateToken(String token){
+        DocumentReference documentReference = db.collection("Users").document(userID);
+        documentReference.update("token", token)
+                .addOnSuccessListener(unused -> mainInterface. showToastSuccessToken())
+                .addOnFailureListener(e -> mainInterface.showToastErrorToken());
+    }
 
 }
 

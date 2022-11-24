@@ -130,7 +130,6 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     @Override
     public boolean onQueryTextChange(String newText) {
         Log.e("Search", newText);
-
         search(newText);
         return true;
     }
