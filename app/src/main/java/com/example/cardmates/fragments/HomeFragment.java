@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
                 .setQuery(query, User.class)
                 .build();
 
-        recyclerViewAdapter = new HomeRvAdapter(options);
+        recyclerViewAdapter = new HomeRvAdapter(options,getActivity());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
