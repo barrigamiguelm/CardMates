@@ -14,7 +14,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string-array name="cities">
+    <string-array name="gustos">
         <item>ashes</item>
         <item>duelmasters</item>
         <item>got</item>
