@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     private void setSpinner(){
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.cities, android.R.layout.simple_spinner_item);
+                R.array.gustos, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
