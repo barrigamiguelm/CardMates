@@ -34,7 +34,6 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 
-//todo editar para que la foto no sea tan grande y alinear con el nombre, cambiar el presentate porque esta raro
 public class UserProfile extends AppCompatActivity implements UserProfileInterface {
 
     private EditText etDateBirt, etUserDesc;

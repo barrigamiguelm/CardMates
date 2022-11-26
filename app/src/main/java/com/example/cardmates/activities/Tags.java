@@ -62,8 +62,6 @@ public class Tags extends AppCompatActivity {
     Map<String, Object> userTags = new HashMap<>();
 
 
-    //TODO: Poner un borde a la foto para que se vea bonito.
-    //TODO: Hacer que cuando un user se borre, borre toda la data que tenga en todas las bases de datos. Tambien hacer que el usuario borre gustos(mas adelante)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

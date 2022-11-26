@@ -28,7 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MapsFragment extends Fragment {
 
-    //todo: que al hacer click en el detalle del marker te lleve a google maps con el sitio seleccionado.
     GoogleMap mMap;
 
 

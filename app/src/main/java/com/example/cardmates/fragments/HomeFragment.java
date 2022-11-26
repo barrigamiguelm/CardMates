@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,7 @@ public class HomeFragment extends Fragment {
     @Inject
     FirebaseInterface firebaseInterface;
 
-    private Button logOut;
+
     private Context context;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -56,9 +57,9 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home,
                 container, false);
 
-        logOut = (Button) view.findViewById(R.id.logOut);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
 
         Query query = db.collection("Users");
@@ -66,32 +67,25 @@ public class HomeFragment extends Fragment {
                 .setQuery(query, User.class)
                 .build();
 
-        recyclerViewAdapter = new HomeRvAdapter(options,getActivity());
+        recyclerViewAdapter = new HomeRvAdapter(options, getActivity());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseInterface.logOut();
-                startActivity(new Intent(getActivity(), Login.class));
-            }
-        });
 
         return view;
 
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         recyclerViewAdapter.startListening();
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         recyclerViewAdapter.stopListening();
     }

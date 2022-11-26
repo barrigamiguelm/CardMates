@@ -70,7 +70,6 @@ public class ChatActivity2 extends AppCompatActivity {
     }
 
 
-    //TODO: username es el mismo en los dos
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
         message.put(Constants.KEY_SENDER_ID, userId);
