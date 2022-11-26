@@ -10,9 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cardmates.ChatDetailActivity;
+import com.example.cardmates.ChatActivity2;
+import com.example.cardmates.model.Constants;
 import com.example.cardmates.model.User;
 import com.example.cardmates.R;
+import com.example.cardmates.model.UserChat;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -39,7 +41,7 @@ public class HomeRvAdapter
         holder.description.setText(model.getDescription());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ChatDetailActivity.class);
+            Intent intent = new Intent(context, ChatActivity2.class);
             intent.putExtra("userId",model.getUser_id());
             intent.putExtra("userName", model.getName());
             context.startActivity(intent);
