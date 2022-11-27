@@ -10,9 +10,11 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -26,7 +28,11 @@ import com.example.cardmates.interfaces.FirebaseInterface;
 import com.example.cardmates.interfaces.UserProfileInterface;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -36,13 +42,14 @@ import javax.inject.Inject;
 
 public class UserProfile extends AppCompatActivity implements UserProfileInterface {
 
-    private EditText etDateBirt, etUserDesc;
+    private EditText etDateBirt, etUserDesc, etUserLocal;
     private TextView tvUserNameUserProfile;
     private ImageView profilePhotoUserProfile;
     private Button btnCreateUser, btnSkipUserProfile;
     private LoadingDialog loadingDialog;
-    private String desc = "Sin descripcion", dateBirth = "Sin fecha";
+    private String desc = "Sin descripcion", dateBirth = "Sin fecha", localidad = "Sin localidad";
     private Uri imageUri;
+    private String encodedImage;
 
     @Inject
     FirebaseInterface firebaseInterface;
@@ -79,6 +86,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
             @Override
             public void onClick(View view) {
                 chosePicture();
+                loadingDialog.showDialog();
             }
         });
 
@@ -100,7 +108,8 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
             public void onClick(View view) {
                 desc = etUserDesc.getText().toString();
                 dateBirth = etDateBirt.getText().toString();
-                firebaseInterface.addAditionalInfo(desc, dateBirth);
+                localidad = etUserLocal.getText().toString();
+                firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
             }
         });
 
@@ -117,6 +126,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         btnSkipUserProfile = (Button) findViewById(R.id.btnSkipUserProfile);
         etDateBirt = (EditText) findViewById(R.id.etDateBirt);
         etUserDesc = (EditText) findViewById(R.id.etUserDesc);
+        etUserLocal = (EditText) findViewById(R.id.etUserLocal);
         tvUserNameUserProfile = (TextView) findViewById(R.id.tvUserNameUserProfile);
         profilePhotoUserProfile = (ImageView) findViewById(R.id.profilePhotoUserProfile);
         loadingDialog = new LoadingDialog(this);
@@ -132,7 +142,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
                 .setTitle("¿Saltar?");
         builder.setPositiveButton("Siguiente", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                firebaseInterface.addAditionalInfo(desc, dateBirth);
+                firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
                 uploadStockPhoto();
                 startActivity(new Intent(UserProfile.this, Tags.class));
             }
@@ -143,6 +153,16 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private String encodeImage(Bitmap bitmap) {
+        int previewWidth = 150;
+        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
+        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
     private void uploadStockPhoto() {
@@ -158,16 +178,46 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
 
     private void chosePicture() {
         mGetContent.launch("image/*");
+
     }
+
+    /*
+    private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    if (result.getData() != null) {
+                        Uri imageuri = result.getData().getData();
+                        try {
+                            InputStream inputStream = getContentResolver().openInputStream(imageuri);
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            profilePhotoUserProfile.setImageBitmap(bitmap);
+                            encodedImage = encodeImage(bitmap);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+    );*/
 
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    loadingDialog.showDialog();
-                    firebaseInterface.uploadPhotoFirebase(uri);
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(uri);
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        profilePhotoUserProfile.setImageBitmap(bitmap);
+                        encodedImage = encodeImage(bitmap);
+                        firebaseInterface.uploadPhotoFirebase(uri);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
                 }
+
             });
 
 

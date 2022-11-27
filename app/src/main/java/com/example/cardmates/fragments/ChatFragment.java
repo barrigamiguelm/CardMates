@@ -66,7 +66,7 @@ public class ChatFragment extends Fragment implements ConversionListener {
         binding = FragmentChatBinding.bind(view);
 
         conversations = new ArrayList<>();
-        conversationsAdapter = new RecentConversationsAdapter(conversations,getActivity(),this);
+        conversationsAdapter = new RecentConversationsAdapter(conversations, getActivity(), this);
         binding.recyclerRecentChats.setHasFixedSize(true);
         binding.recyclerRecentChats.setAdapter(conversationsAdapter);
         binding.recyclerRecentChats.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -137,9 +137,6 @@ public class ChatFragment extends Fragment implements ConversionListener {
 
     @Override
     public void onConversionClicked(String sender_id, String sender_name) {
-        Intent intent =new Intent(getActivity(), ChatActivity2.class);
-        intent.putExtra("sender_id", sender_id);
 
-        startActivity(intent);
     }
 }

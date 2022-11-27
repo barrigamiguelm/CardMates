@@ -1,9 +1,17 @@
 package com.example.cardmates;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.cardmates.adapters.ChatAdapter2;
 import com.example.cardmates.dagger.CardMatesApp;
@@ -27,13 +35,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 public class ChatActivity2 extends AppCompatActivity {
 
     private ActivityChat2Binding binding;
-    private String otherUserId, reciverName, userId, userName;
+    private String otherUserId, reciverName, userId, image_reciever;
+    private ImageView imageView;
     private List<ChatMessage> chatMessages;
     private ChatAdapter2 chatAdapter2;
     private FirebaseFirestore database;
@@ -66,7 +76,6 @@ public class ChatActivity2 extends AppCompatActivity {
         binding.chatRecyclerView.setAdapter(chatAdapter2);
         database = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-
     }
 
 
@@ -142,12 +151,14 @@ public class ChatActivity2 extends AppCompatActivity {
     private void loadRecieverDetails() {
         otherUserId = getIntent().getStringExtra(Constants.KEY_OTHER_USER_ID);
         reciverName = getIntent().getStringExtra(Constants.KEY_USER_NAME);
-
+        image_reciever = getIntent().getStringExtra(Constants.KEY_RECIEVER_IMG);
         binding.textName.setText(reciverName);
+        binding.imageUser.setImageBitmap(getUserImage(image_reciever));
     }
 
     public void setListeners() {
         binding.layoutSend.setOnClickListener(v -> sendMessage());
+       //TODO: hacer algo con el boton del maps.
     }
 
     private String getReadableDateTime(Date date) {
@@ -181,6 +192,11 @@ public class ChatActivity2 extends AppCompatActivity {
                     userId
             );
         }
+    }
+
+    private Bitmap getUserImage(String encodedImage){
+        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     private void checkForConversionRemotely(String senderId, String receiverId) {

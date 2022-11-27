@@ -1,6 +1,9 @@
 package com.example.cardmates.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -19,6 +22,8 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
     Context context;
     ConversionListener conversionListener;
 
+    //TODO: sale id en vez de nombre
+    //todo: salen las conversaciones 2 veces
     public RecentConversationsAdapter(List<ChatMessage> chatMessages, Context context, ConversionListener conversionListener) {
         this.chatMessages = chatMessages;
         this.context = context;
@@ -59,16 +64,10 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
 
 
         void setData(ChatMessage chatMessage) {
-
-            binding.textRecentMessage.setText(chatMessage.message);
+            binding.textRecentMessage.setText("ultimo mensaje: "+chatMessage.message);
             binding.textName.setText(chatMessage.conversionName);
-            binding.getRoot().setOnClickListener(v -> {
-                String sender_id = chatMessage.conversionId;
-                String sender_name = chatMessage.conversionName;
-                conversionListener.onConversionClicked(sender_id, sender_name);
-            });
-
         }
 
     }
+
 }

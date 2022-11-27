@@ -20,6 +20,7 @@ public class ChatAdapter2 extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private static final int VIEW_TYPE_SENT = 1;
     private static final int VIEW_TYPE_RECEIVED = 2;
 
+    //TODO: peta al volver hacia atras.
     public ChatAdapter2(List<ChatMessage> chatMessages, String sender_Id) {
         this.chatMessages = chatMessages;
         this.sender_id = sender_Id;

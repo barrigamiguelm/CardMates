@@ -21,7 +21,7 @@ public interface FirebaseInterface {
 
     void checkUser();
 
-    void addAditionalInfo(String desc, String datebirth);
+    void addAditionalInfo(String desc, String datebirth, String image,String localidad);
 
     void editUserInfo(String desc, String datebirth,String name);
 

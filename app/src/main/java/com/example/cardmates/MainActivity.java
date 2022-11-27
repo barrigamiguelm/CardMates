@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.chat:
-                    replaceFragment(new ChatFragment());
+                    replaceFragment(new MapsFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());

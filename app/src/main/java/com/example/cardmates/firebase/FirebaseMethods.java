@@ -214,10 +214,13 @@ public class FirebaseMethods implements FirebaseInterface {
 
 
     @Override
-    public void addAditionalInfo(String desc, String datebirth) {
+    public void addAditionalInfo(String desc, String datebirth, String image,String userLocal) {
         Map<String, Object> data = new HashMap<>();
         data.put("description", desc);
         data.put("Date", datebirth);
+        data.put("user_id", getUserID());
+        data.put("Localidad", userLocal);
+        data.put("image", image);
         db.collection("Users").document(userID).set(data, SetOptions.merge());
         userProfileInterface.showInfo();
     }

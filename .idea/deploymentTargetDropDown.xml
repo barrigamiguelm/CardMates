@@ -7,7 +7,7 @@
         <deviceKey>
           <Key>
             <type value="SERIAL_NUMBER" />
-            <value value="ZT322BMJPT" />
+            <value value="adb-5c2e9352-8fmmqD._adb-tls-connect._tcp" />
           </Key>
         </deviceKey>
       </Target>
@@ -16,7 +16,7 @@
         <deviceKey>
           <Key>
             <type value="SERIAL_NUMBER" />
-            <value value="5c2e9352" />
+            <value value="ZT322BMJPT" />
           </Key>
         </deviceKey>
       </Target>
