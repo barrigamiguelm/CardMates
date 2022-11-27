@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.paging.LoadState;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.cardmates.activities.LoadingDialog;
 import com.example.cardmates.model.User;
 import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
@@ -30,7 +32,7 @@ import com.google.firebase.firestore.Query;
 
 import javax.inject.Inject;
 
-public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener{
+public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     @Inject
     FirebaseInterface firebaseInterface;
@@ -84,13 +86,13 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     }
 
-    private void initialize(View view){
+    private void initialize(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         txtSearch = view.findViewById(R.id.txtSearch);
         spinner = view.findViewById(R.id.spinner);
     }
 
-    private void listUsers(){
+    private void listUsers() {
         query = ref;
     }
 
@@ -105,11 +107,10 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         recyclerViewAdapter.startListening();
     }
 
-    private void search(String searchText){
-
+    private void search(String searchText) {
         String spinnerText = spinner.getSelectedItem().toString();
 
-        if (!searchText.isEmpty()){
+        if (!searchText.isEmpty()) {
             query = ref.whereEqualTo("Localidad", searchText).whereArrayContains("userLikes", spinnerText);
         } else {
             query = ref;
@@ -118,22 +119,21 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         setRecyclerViewAdapter(query);
     }
 
-    private void setSpinner(){
+    private void setSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.gustos, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
-
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         recyclerViewAdapter.startListening();
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         recyclerViewAdapter.stopListening();
     }
