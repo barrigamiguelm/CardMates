@@ -4,69 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ProfileEdit"
-    android:padding="10dp">
+    android:padding="@dimen/_15sdp"
+    tools:context=".activities.ProfileEdit">
+
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/imgUser"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edtProfileNameEdit"
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/etProfileNameEditInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Nombre"
+        android:layout_marginTop="28dp"
+        android:hint="Nombre User"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgUser" />
+        app:layout_constraintTop_toBottomOf="@+id/imgUser">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtProfileNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:inputType="text"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+            app:layout_constraintStart_toStartOf="@+id/left_guideline"
+            app:layout_constraintTop_toTopOf="@+id/top_guideline" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <EditText
-        android:id="@+id/etDateBirtProfileEdit"
-        android:layout_marginTop="16dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etDateBirtProfileEditInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="false"
+        android:layout_marginTop="28dp"
         android:hint="Fecha de nacimiento"
-        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtProfileNameEdit"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/etProfileNameEditInput">
 
-    <EditText
-        android:id="@+id/edtDescProfileEdit"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etDateBirtProfileEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtDescProfileEditInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:hint="Descripcion"
-        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etDateBirtProfileEdit"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/etDateBirtProfileEditInput">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtDescProfileEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+            app:layout_constraintStart_toStartOf="@+id/left_guideline"
+            app:layout_constraintTop_toTopOf="@+id/top_guideline" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/saveUserChangesProfileEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/background_chat_input"
         android:text="Guardar"
-        />
-
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,8 @@
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/profilePhotoUserProfile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
         android:layout_marginTop="44dp"
         android:src="@drawable/profile"
         app:civ_shadow="true"
@@ -137,7 +137,7 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="73dp"
         app:layout_constraintStart_toEndOf="@+id/profilePhotoUserProfile"
-        app:layout_constraintTop_toBottomOf="@+id/btnSkipUserProfile"></TextView>
+        app:layout_constraintTop_toBottomOf="@+id/btnSkipUserProfile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

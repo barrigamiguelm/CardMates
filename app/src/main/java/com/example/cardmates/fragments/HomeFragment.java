@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.paging.LoadState;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,7 +38,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     @Inject
     FirebaseInterface firebaseInterface;
 
-    private Button logOut;
+
     private Context context;
     private SearchView txtSearch;
     private Spinner spinner;
@@ -63,24 +64,14 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,
                 container, false);
-
-        //logOut = (Button) view.findViewById(R.id.logOut);
-
         initialize(view);
         listUsers();
 
         setRecyclerViewAdapter(query);
         setSpinner();
         txtSearch.setOnQueryTextListener(this);
-
-        /*logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseInterface.logOut();
-                startActivity(new Intent(getActivity(), Login.class));
-            }
-        });*/
-
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         return view;
 
@@ -101,7 +92,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                 .setQuery(query, User.class)
                 .build();
 
-        recyclerViewAdapter = new HomeRvAdapter(options);
+        recyclerViewAdapter = new HomeRvAdapter(options, getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.startListening();

@@ -1,5 +1,7 @@
 package com.example.cardmates.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cardmates.ChatActivity2;
+import com.example.cardmates.model.Constants;
 import com.example.cardmates.model.User;
 import com.example.cardmates.R;
+import com.example.cardmates.model.UserChat;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class HomeRvAdapter
         extends FirestoreRecyclerAdapter<User, HomeRvAdapter.MyViewHolder> {
 
-    public HomeRvAdapter(@NonNull FirestoreRecyclerOptions<User> options) {
+    Context context;
+    public HomeRvAdapter(@NonNull FirestoreRecyclerOptions<User> options, Context context) {
         super(options);
+        this.context = context;
     }
 
     @NonNull
@@ -32,6 +39,13 @@ public class HomeRvAdapter
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull User model) {
         holder.name.setText(model.getName());
         holder.description.setText(model.getDescription());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatActivity2.class);
+            intent.putExtra("userId",model.getUser_id());
+            intent.putExtra("userName", model.getName());
+            context.startActivity(intent);
+        });
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

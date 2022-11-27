@@ -53,8 +53,6 @@ public class FirebaseMethods implements FirebaseInterface {
     private DocumentSnapshot document;
     private Map<String, Object> userInfo;
 
-    //TODO: no recoge la foto de perfil
-
 
     public FirebaseMethods(Context context) {
         setUpFirebaseAuth();
@@ -148,6 +146,7 @@ public class FirebaseMethods implements FirebaseInterface {
             userInfo.put("Imagen", url);
             userInfo.put("Nombre", user.getName());
             userInfo.put("Desc", user.getDescription());
+            userInfo.put("user_id", getUserID());
         } else {
             int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
             userInfo.put("Edad", String.valueOf(age));
@@ -155,6 +154,7 @@ public class FirebaseMethods implements FirebaseInterface {
             userInfo.put("Imagen", url);
             userInfo.put("Nombre", user.getName());
             userInfo.put("Desc", user.getDescription());
+            userInfo.put("user_id", getUserID());
         }
 
         return userInfo;

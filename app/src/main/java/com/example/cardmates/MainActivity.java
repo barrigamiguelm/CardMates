@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new ChatFragment());
+        replaceFragment(new HomeFragment());
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     break;
                 case R.id.chat:
-                    replaceFragment(new MapsFragment());
+                    replaceFragment(new ChatFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());

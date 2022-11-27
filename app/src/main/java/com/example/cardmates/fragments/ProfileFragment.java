@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.cardmates.activities.LoadingDialog;
+import com.example.cardmates.activities.Login;
 import com.example.cardmates.activities.ProfileEdit;
 import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
 import com.example.cardmates.interfaces.FirebaseInterface;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
@@ -29,12 +31,13 @@ public class ProfileFragment extends Fragment {
     FirebaseInterface firebaseInterface;
 
     private Map<String, Object> userInfo;
-    private Button btnEditarPerfil;
+    private Button btnEditarPerfil,btnLogOut;
     private TextView tvDes, tvName, tvEdad;
     private ImageView imgUser;
     private LoadingDialog loadingDialog;
 
 
+    //todo:poner loadings
     public ProfileFragment() {
 
     }
@@ -58,9 +61,17 @@ public class ProfileFragment extends Fragment {
         tvName = view.findViewById(R.id.tvName);
         tvEdad = view.findViewById(R.id.tvEdad);
         imgUser = view.findViewById(R.id.imgUser);
+        btnLogOut = view.findViewById(R.id.btnLogOut);
 
         completar();
 
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseInterface.logOut();
+                startActivity(new Intent(getActivity(), Login.class));
+            }
+        });
         btnEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +80,8 @@ public class ProfileFragment extends Fragment {
             }
         });
         return view;
+
+
     }
 
     private void completar() {
@@ -81,7 +94,7 @@ public class ProfileFragment extends Fragment {
 
         tvName.setText(name);
         tvDes.setText(desc);
-        tvEdad.setText(edad);
+        tvEdad.setText("Edad: " + edad);
 
         Glide.with(this)
                 .load(userInfo.get("Imagen"))
