@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                 .build();
 
         recyclerViewAdapter = new HomeRvAdapter(options, getActivity());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new HomeRvAdapter.WrapContentLinearLayoutManager(getActivity()) );
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.startListening();
     }
