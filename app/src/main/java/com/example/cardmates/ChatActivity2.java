@@ -158,15 +158,13 @@ public class ChatActivity2 extends AppCompatActivity {
 
     public void setListeners() {
         binding.layoutSend.setOnClickListener(v -> sendMessage());
-        binding.imageMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (view.getId()==R.id.imageMaps){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentcontainer, new MapsFragment()).commit();
-                    binding.chatActivity.setVisibility(View.GONE);
-                }
+        binding.imageMaps.setOnClickListener(view -> {
+            if (view.getId()==R.id.imageMaps){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentcontainer, new MapsFragment()).commit();
+                binding.chatActivity.setVisibility(View.GONE);
             }
         });
+        binding.imageBack.setOnClickListener(view -> onBackPressed());
     }
 
     private String getReadableDateTime(Date date) {

@@ -27,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MapsFragment extends Fragment {
-
+    //TODO: Valorar si maps debe de ser un fragment o una activity
     GoogleMap mMap;
 
 
