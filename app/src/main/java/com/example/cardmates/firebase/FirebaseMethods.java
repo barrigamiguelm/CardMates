@@ -147,6 +147,7 @@ public class FirebaseMethods implements FirebaseInterface {
             userInfo.put("Nombre", user.getName());
             userInfo.put("Desc", user.getDescription());
             userInfo.put("user_id", getUserID());
+            userInfo.put("Localidad", user.getLocalidad());
         } else {
             int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
             userInfo.put("Edad", String.valueOf(age));
@@ -155,6 +156,7 @@ public class FirebaseMethods implements FirebaseInterface {
             userInfo.put("Nombre", user.getName());
             userInfo.put("Desc", user.getDescription());
             userInfo.put("user_id", getUserID());
+            userInfo.put("Localidad", user.getLocalidad());
         }
 
         return userInfo;
@@ -226,11 +228,12 @@ public class FirebaseMethods implements FirebaseInterface {
     }
 
     @Override
-    public void editUserInfo(String desc, String datebirth, String name) {
+    public void editUserInfo(String desc, String datebirth, String name, String localidad) {
         Map<String, Object> data = new HashMap<>();
         data.put("description", desc);
         data.put("Date", datebirth);
         data.put("Name", name);
+        data.put("Localidad", localidad);
         db.collection("Users").document(userID).set(data, SetOptions.merge());
     }
 

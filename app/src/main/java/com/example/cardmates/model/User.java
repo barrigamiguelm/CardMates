@@ -10,7 +10,7 @@ public class User {
     private String Date;
     private String Description;
     private String image;
-    private String localidad;
+    private String Localidad;
 
     public User() {
     }
@@ -22,15 +22,15 @@ public class User {
         Date = date;
         Description = description;
         image = imageUser;
-        localidad = localidadUser;
+        Localidad = localidadUser;
     }
 
     public String getLocalidad() {
-        return localidad;
+        return Localidad;
     }
 
     public void setLocalidad(String localidad) {
-        this.localidad = localidad;
+        this.Localidad = localidad;
     }
 
     public String getImage() {

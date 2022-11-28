@@ -37,7 +37,7 @@ public class ProfileEdit extends AppCompatActivity implements ProfileEditInterfa
     FirebaseInterface firebaseInterface;
 
     private Map<String, Object> userInfo;
-    private EditText edtDescProfileEdit, etDateBirtProfileEdit, edtProfileNameEdit;
+    private EditText edtDescProfileEdit, etDateBirtProfileEdit, edtProfileNameEdit,etLocalidadProfileEdit;
     private ImageView imgUser;
     private Button saveUserChangesProfileEdit;
     private LoadingDialog loadingDialog;
@@ -53,6 +53,7 @@ public class ProfileEdit extends AppCompatActivity implements ProfileEditInterfa
         edtDescProfileEdit = findViewById(R.id.edtDescProfileEdit);
         etDateBirtProfileEdit = findViewById(R.id.etDateBirtProfileEdit);
         edtProfileNameEdit = findViewById(R.id.edtProfileNameEdit);
+        etLocalidadProfileEdit = findViewById(R.id.etLocalidadProfileEdit);
         imgUser = findViewById(R.id.imgUser);
         saveUserChangesProfileEdit = findViewById(R.id.saveUserChangesProfileEdit);
         loadingDialog = new LoadingDialog(this);
@@ -73,7 +74,11 @@ public class ProfileEdit extends AppCompatActivity implements ProfileEditInterfa
         saveUserChangesProfileEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firebaseInterface.editUserInfo(edtDescProfileEdit.getText().toString(), etDateBirtProfileEdit.getText().toString(), edtProfileNameEdit.getText().toString());
+                firebaseInterface.editUserInfo(
+                        edtDescProfileEdit.getText().toString(),
+                        etDateBirtProfileEdit.getText().toString(),
+                        edtProfileNameEdit.getText().toString(),
+                        etLocalidadProfileEdit.getText().toString());
                 Toast.makeText(ProfileEdit.this, "Cambios realizados correctamente", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ProfileEdit.this, MainActivity.class));
             }
@@ -133,11 +138,13 @@ public class ProfileEdit extends AppCompatActivity implements ProfileEditInterfa
         String desc = String.valueOf(userInfo.get("Desc"));
         String name = String.valueOf(userInfo.get("Nombre"));
         String date = String.valueOf(userInfo.get("Fecha"));
+        String localidad = String.valueOf(userInfo.get("Localidad"));
 
 
         edtProfileNameEdit.setText(name);
         edtDescProfileEdit.setText(desc);
         etDateBirtProfileEdit.setText(date);
+        etLocalidadProfileEdit.setText(localidad);
 
         Glide.with(this)
                 .load(userInfo.get("Imagen"))

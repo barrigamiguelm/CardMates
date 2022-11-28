@@ -23,7 +23,7 @@ public interface FirebaseInterface {
 
     void addAditionalInfo(String desc, String datebirth, String image,String localidad);
 
-    void editUserInfo(String desc, String datebirth,String name);
+    void editUserInfo(String desc, String datebirth,String name, String localidad);
 
     void uploadPhotoFirebase(Uri imageUri);
 
