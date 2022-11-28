@@ -29,14 +29,18 @@ import com.example.cardmates.R;
 import com.example.cardmates.adapters.HomeRvAdapter;
 import com.example.cardmates.interfaces.FirebaseInterface;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -121,6 +125,23 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     }
 
     private void setSpinner() {
+        ArrayList<Cards> cards = new ArrayList<Cards>();
+        db.collection("Cards").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()){
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot d: list) {
+                        Cards card = d.toObject(Cards.class);
+                        cardsList.add(card);
+                    }
+
+
+
+                }
+            }
+        });
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.gustos, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -146,17 +167,6 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     @Override
     public boolean onQueryTextChange(String newText) {
-
-        ArrayList<Cards> filteredCards = new ArrayList<Cards>();
-        for (Cards card: cardsList){
-            if (card.getTitle().toLowerCase().contains(newText.toLowerCase())){
-                filteredCards.add(card);
-            }
-        }
-
-        CardAdapter adapter = new CardAdapter(getContext(), 0, filteredCards);
-        listView.setAdapter(adapter);
-
         Log.e("Search", newText);
 
         search(newText);
