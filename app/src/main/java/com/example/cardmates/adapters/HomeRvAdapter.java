@@ -46,7 +46,8 @@ public class HomeRvAdapter
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull User model) {
         holder.name.setText(model.getName());
-        holder.description.setText(model.getDescription());
+        holder.localidad.setText(model.getLocalidad());
+        holder.userLikes.setText(model.getUserLikes());
         holder.imageView.setImageBitmap(getUserImage(model.getImage()));
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatActivity2.class);
@@ -64,14 +65,15 @@ public class HomeRvAdapter
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name, description;
+        private TextView name, localidad, userLikes;
         private ImageView imageView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imgUserCard);
             name = itemView.findViewById(R.id.tvName);
-            description = itemView.findViewById(R.id.tvDescription);
+            localidad = itemView.findViewById(R.id.tvLocalidad);
+            userLikes = itemView.findViewById(R.id.tvUserLikes);
         }
     }
 

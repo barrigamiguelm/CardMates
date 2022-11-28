@@ -1,6 +1,6 @@
 package com.example.cardmates.model;
 
-import com.example.cardmates.activities.LoadingDialog;
+import java.util.List;
 
 public class User {
 
@@ -11,11 +11,13 @@ public class User {
     private String Description;
     private String image;
     private String Localidad;
+    private List<String> userLikes;
 
     public User() {
     }
 
-    public User(String user_id, String email, String name, String date, String description, String imageUser, String localidadUser) {
+    public User(String user_id, String email, String name, String date,
+                String description, String imageUser, String localidadUser, List userLikes) {
         this.user_id = user_id;
         Email = email;
         Name = name;
@@ -23,6 +25,7 @@ public class User {
         Description = description;
         image = imageUser;
         Localidad = localidadUser;
+        this.userLikes = userLikes;
     }
 
     public String getLocalidad() {
@@ -79,5 +82,10 @@ public class User {
 
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public String getUserLikes(){
+        String string = String.join(" , ", userLikes);
+        return string;
     }
 }
