@@ -112,9 +112,12 @@ public class ProfileEdit extends AppCompatActivity implements ProfileEditInterfa
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    loadingDialog.showDialog();
-                    firebaseInterface.editPhotoUser(uri);
-                    setPhoto(uri);
+                    if (uri != null){
+                        loadingDialog.showDialog();
+                        firebaseInterface.editPhotoUser(uri);
+                        setPhoto(uri);
+                    }
+
                 }
             });
 
