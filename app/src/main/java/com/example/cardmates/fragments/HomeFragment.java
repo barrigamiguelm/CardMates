@@ -17,9 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.cardmates.activities.LoadingDialog;
+import com.example.cardmates.adapters.CardAdapter;
+import com.example.cardmates.model.Cards;
 import com.example.cardmates.model.User;
 import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
@@ -30,6 +33,10 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -42,6 +49,8 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
     private Context context;
     private SearchView txtSearch;
     private Spinner spinner;
+    private ListView listView;
+    public static ArrayList<Cards> cardsList = new ArrayList<Cards>();
 
     private Query query;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -81,6 +90,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         recyclerView = view.findViewById(R.id.recyclerView);
         txtSearch = view.findViewById(R.id.txtSearch);
         spinner = view.findViewById(R.id.spinner);
+        listView = view.findViewById(R.id.listView);
     }
 
     private void listUsers() {
@@ -136,6 +146,17 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     @Override
     public boolean onQueryTextChange(String newText) {
+
+        ArrayList<Cards> filteredCards = new ArrayList<Cards>();
+        for (Cards card: cardsList){
+            if (card.getTitle().toLowerCase().contains(newText.toLowerCase())){
+                filteredCards.add(card);
+            }
+        }
+
+        CardAdapter adapter = new CardAdapter(getContext(), 0, filteredCards);
+        listView.setAdapter(adapter);
+
         Log.e("Search", newText);
 
         search(newText);
