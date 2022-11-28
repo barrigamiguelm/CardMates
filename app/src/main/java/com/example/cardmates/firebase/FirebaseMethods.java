@@ -148,6 +148,7 @@ public class FirebaseMethods implements FirebaseInterface {
             userInfo.put("Desc", user.getDescription());
             userInfo.put("user_id", getUserID());
             userInfo.put("Localidad", user.getLocalidad());
+            userInfo.put("userLikes", user.getUserLikes());
         } else {
             int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
             userInfo.put("Edad", String.valueOf(age));
@@ -157,6 +158,7 @@ public class FirebaseMethods implements FirebaseInterface {
             userInfo.put("Desc", user.getDescription());
             userInfo.put("user_id", getUserID());
             userInfo.put("Localidad", user.getLocalidad());
+            userInfo.put("userLikes", user.getUserLikes());
         }
 
         return userInfo;

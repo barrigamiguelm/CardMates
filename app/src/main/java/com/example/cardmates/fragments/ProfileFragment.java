@@ -32,7 +32,7 @@ public class ProfileFragment extends Fragment {
 
     private Map<String, Object> userInfo;
     private Button btnEditarPerfil,btnLogOut;
-    private TextView tvDes, tvName, tvEdad;
+    private TextView tvDes, tvName, tvEdad, tvLocal, tvUserLikes;
     private ImageView imgUser;
     private LoadingDialog loadingDialog;
 
@@ -60,6 +60,8 @@ public class ProfileFragment extends Fragment {
         tvDes = view.findViewById(R.id.tvDes);
         tvName = view.findViewById(R.id.tvName);
         tvEdad = view.findViewById(R.id.tvEdad);
+        tvLocal = view.findViewById(R.id.tvLocal);
+        tvUserLikes = view.findViewById(R.id.tvUserCards);
         imgUser = view.findViewById(R.id.imgUser);
         btnLogOut = view.findViewById(R.id.btnLogOut);
 
@@ -91,10 +93,14 @@ public class ProfileFragment extends Fragment {
         String desc = String.valueOf(userInfo.get("Desc"));
         String name = String.valueOf(userInfo.get("Nombre"));
         String edad = String.valueOf(userInfo.get("Edad"));
+        String localidad = String.valueOf(userInfo.get("Localidad"));
+        String userLikes = String.valueOf(userInfo.get("userLikes"));
 
         tvName.setText(name);
         tvDes.setText(desc);
         tvEdad.setText("Edad: " + edad);
+        tvLocal.setText(localidad);
+        tvUserLikes.setText(userLikes);
 
         Glide.with(this)
                 .load(userInfo.get("Imagen"))
