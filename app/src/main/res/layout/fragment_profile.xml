@@ -35,25 +35,39 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="56dp"
         android:padding="@dimen/_5sdp"
         android:text="holder_Desc"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAcercaDe" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEdad" />
 
     <TextView
-        android:id="@+id/tvAcercaDe"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvLocal"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:layout_marginTop="56dp"
         android:padding="@dimen/_5sdp"
-        android:text="Descripción:"
+        android:text="Localidad"
         android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEdad" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDes"/>
+
+    <TextView
+        android:id="@+id/tvUserCards"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="56dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Cartas"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocal"/>
 
     <Button
         android:id="@+id/btnLogOut"
