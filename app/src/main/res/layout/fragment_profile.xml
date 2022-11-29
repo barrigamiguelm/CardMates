@@ -31,45 +31,87 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvDes"
+        android:id="@+id/tvUserCardsHolder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="20dp"
         android:padding="@dimen/_5sdp"
-        android:text="holder_Desc"
+        android:text="Le gusta los juegos:"
         android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEdad" />
+
+
+    <TextView
+
+        android:id="@+id/tvUserCards"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Cartas"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserCardsHolder" />
+
+    <TextView
+        android:id="@+id/tvLocalHolder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="25dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Localidad:"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserCards" />
 
     <TextView
         android:id="@+id/tvLocal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="56dp"
         android:padding="@dimen/_5sdp"
         android:text="Localidad"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDes"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvLocalHolder" />
 
     <TextView
-        android:id="@+id/tvUserCards"
+        android:id="@+id/tvDesHolder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="25dp"
         android:padding="@dimen/_5sdp"
-        android:text="Cartas"
+        android:text="Descripcion"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocal" />
+
+    <TextView
+        android:id="@+id/tvDes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Descripcion:"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLocal"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDesHolder" />
 
     <Button
+
         android:id="@+id/btnLogOut"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="0dp"
@@ -83,7 +125,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/_16sdp"
-    tools:context=".fragments.ProfileFragment">
+    tools:context=".activities.ChatUserDetailActivity">
+
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
         android:id="@+id/imageBack"
@@ -14,7 +15,7 @@
         android:padding="@dimen/_4sdp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/imgUserDetail"
@@ -28,48 +29,88 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvDesDetail"
+        android:id="@+id/tvUserCardsHolder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="20dp"
         android:padding="@dimen/_5sdp"
-        android:text="holder_Desc"
+        android:text="Le gusta los juegos:"
         android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEdadDetail" />
 
-    <TextView
-        android:id="@+id/tvLocalDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="56dp"
-        android:padding="@dimen/_5sdp"
-        android:text="Localidad"
-        android:textSize="@dimen/_13sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDesDetail"/>
 
     <TextView
         android:id="@+id/tvUserCardsDetail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="56dp"
         android:padding="@dimen/_5sdp"
         android:text="Cartas"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLocalDetail"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvUserCardsHolder" />
+
+    <TextView
+        android:id="@+id/tvLocalHolder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="25dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Localidad:"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserCardsDetail" />
+
+    <TextView
+        android:id="@+id/tvLocalDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Localidad"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocalHolder" />
+
+    <TextView
+        android:id="@+id/tvDesHolder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="25dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Descripcion"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLocalDetail" />
+
+    <TextView
+        android:id="@+id/tvDesDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:padding="@dimen/_5sdp"
+        android:text="Descripcion:"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDesHolder" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,3 +142,6 @@
         app:layout_constraintTop_toBottomOf="@+id/imgUserDetail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
