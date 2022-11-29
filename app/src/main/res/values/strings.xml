@@ -14,13 +14,14 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="gustos">
-        <item>ashes</item>
-        <item>duelmasters</item>
-        <item>got</item>
-        <item>keyforge</item>
-        <item>magic</item>
-        <item>pokemon</item>
-        <item>poker</item>
-        <item>yuhioh</item>
+        <item>Todos</item>
+        <item>Ashes</item>
+        <item>Duelmasters</item>
+        <item>Got</item>
+        <item>Keyforge</item>
+        <item>Magic</item>
+        <item>Pokemon</item>
+        <item>Poker</item>
+        <item>Yuhioh</item>
     </string-array>
 </resources>

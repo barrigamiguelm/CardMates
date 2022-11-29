@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.cardmates.activities.ChatUserDetailActivity;
 import com.example.cardmates.adapters.ChatAdapter2;
@@ -150,6 +151,10 @@ public class ChatActivity2 extends AppCompatActivity {
 
     private void loadRecieverDetails() {
         otherUserId = getIntent().getStringExtra(Constants.KEY_OTHER_USER_ID);
+        if (otherUserId.equals(firebaseInterface.getUserID())){
+            onBackPressed();
+            Toast.makeText(this, "No te hables a ti mismo, pillin :)", Toast.LENGTH_SHORT).show();
+        }
         binding.textName.setText(getIntent().getStringExtra(Constants.KEY_USER_NAME));
         binding.imageUser.setImageBitmap(getUserImage(getIntent().getStringExtra(Constants.KEY_RECIEVER_IMG)));
     }

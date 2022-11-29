@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +31,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -65,17 +68,44 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         View view = inflater.inflate(R.layout.fragment_home,
                 container, false);
         initialize(view);
-        listUsers();
+
+        query = ref.whereNotEqualTo("Localidad" , "Sin localidad");
 
         setRecyclerViewAdapter(query);
         setSpinner();
+
         txtSearch.setOnQueryTextListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
+        setSpinnerListener();
+
         return view;
+    }
+
+    private void setSpinnerListener() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (spinner.getSelectedItemPosition() == 0) {
+                    query = ref.whereNotEqualTo("Localidad", "Sin localidad");
+                    setRecyclerViewAdapter(query);
+                } else {
+                    String spinnerText = spinner.getSelectedItem().toString();
+                    query = ref.whereArrayContains("userLikes", spinnerText.toLowerCase());
+                    setRecyclerViewAdapter(query);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
+
 
     private void initialize(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -83,9 +113,6 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         spinner = view.findViewById(R.id.spinner);
     }
 
-    private void listUsers() {
-        query = ref;
-    }
 
     private void setRecyclerViewAdapter(Query query) {
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
@@ -93,18 +120,16 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                 .build();
 
         recyclerViewAdapter = new HomeRvAdapter(options, getActivity());
-        recyclerView.setLayoutManager(new HomeRvAdapter.WrapContentLinearLayoutManager(getActivity()) );
+        recyclerView.setLayoutManager(new HomeRvAdapter.WrapContentLinearLayoutManager(getActivity()));
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.startListening();
     }
-
+    
     private void search(String searchText) {
-        String spinnerText = spinner.getSelectedItem().toString();
-
         if (!searchText.isEmpty()) {
-            query = ref.whereEqualTo("Localidad", searchText).whereArrayContains("userLikes", spinnerText);
+            query = ref.whereEqualTo("Localidad", searchText).whereNotEqualTo("Localidad", "Sin localidad");
         } else {
-            query = ref;
+            query = ref.whereNotEqualTo("Localidad", "Sin localidad");
         }
 
         setRecyclerViewAdapter(query);
