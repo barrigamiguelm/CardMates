@@ -54,6 +54,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAlignment="center"
