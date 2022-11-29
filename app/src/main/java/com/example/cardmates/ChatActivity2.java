@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.cardmates.activities.ChatUserDetailActivity;
 import com.example.cardmates.adapters.ChatAdapter2;
 import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.databinding.ActivityChat2Binding;
@@ -159,12 +160,19 @@ public class ChatActivity2 extends AppCompatActivity {
     public void setListeners() {
         binding.layoutSend.setOnClickListener(v -> sendMessage());
         binding.imageMaps.setOnClickListener(view -> {
-            if (view.getId()==R.id.imageMaps){
+            if (view.getId() == R.id.imageMaps) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentcontainer, new MapsFragment()).commit();
                 binding.chatActivity.setVisibility(View.GONE);
             }
         });
         binding.imageBack.setOnClickListener(view -> onBackPressed());
+        binding.imageUser.setOnClickListener(view -> openUserProfileDetail());
+    }
+
+    private void openUserProfileDetail() {
+        Intent intent = new Intent(this, ChatUserDetailActivity.class);
+        intent.putExtra("otherUserId", otherUserId);
+        startActivity(intent);
     }
 
     private String getReadableDateTime(Date date) {
@@ -200,7 +208,7 @@ public class ChatActivity2 extends AppCompatActivity {
         }
     }
 
-    private Bitmap getUserImage(String encodedImage){
+    private Bitmap getUserImage(String encodedImage) {
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }

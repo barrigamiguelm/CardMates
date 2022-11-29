@@ -52,6 +52,7 @@ public class FirebaseMethods implements FirebaseInterface {
     private FirebaseFirestore db;
     private DocumentSnapshot document;
     private Map<String, Object> userInfo;
+    private Map<String, Object> userInfoDetail;
 
 
     public FirebaseMethods(Context context) {
@@ -216,9 +217,55 @@ public class FirebaseMethods implements FirebaseInterface {
         });
     }
 
+    public Map<String, Object> getUserInfoWithId(String idUser) {
+
+        Calendar today = Calendar.getInstance();
+        DocumentReference docRef = db.collection("Users").document(idUser);
+
+        Task<DocumentSnapshot> task = docRef.get();
+
+        Task<Uri> taskUri = storageReference.child("ProfilePhotos/" + idUser).getDownloadUrl();
+
+        if (!taskUri.isSuccessful()) {
+
+        }
+
+        while (!task.isComplete() || !taskUri.isComplete()) {
+
+        }
+
+        document = task.getResult();
+        User user = document.toObject(User.class);
+
+        String url = taskUri.getResult().toString();
+
+        userInfoDetail = new HashMap<>();
+
+        if (user.getDate().equals("Sin fecha")) {
+            userInfoDetail.put("Edad", user.getDate());
+            userInfoDetail.put("Imagen", url);
+            userInfoDetail.put("Nombre", user.getName());
+            userInfoDetail.put("Desc", user.getDescription());
+            userInfoDetail.put("user_id", getUserID());
+            userInfoDetail.put("Localidad", user.getLocalidad());
+            userInfoDetail.put("userLikes", user.getUserLikes());
+        } else {
+            int age = today.get(Calendar.YEAR) - Integer.parseInt(user.getDate().substring(0, 4));
+            userInfoDetail.put("Edad", String.valueOf(age));
+            userInfoDetail.put("Fecha", user.getDate());
+            userInfoDetail.put("Imagen", url);
+            userInfoDetail.put("Nombre", user.getName());
+            userInfoDetail.put("Desc", user.getDescription());
+            userInfoDetail.put("user_id", getUserID());
+            userInfoDetail.put("Localidad", user.getLocalidad());
+            userInfoDetail.put("userLikes", user.getUserLikes());
+        }
+
+        return userInfoDetail;
+    }
 
     @Override
-    public void addAditionalInfo(String desc, String datebirth, String image,String userLocal) {
+    public void addAditionalInfo(String desc, String datebirth, String image, String userLocal) {
         Map<String, Object> data = new HashMap<>();
         data.put("description", desc);
         data.put("Date", datebirth);
