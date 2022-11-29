@@ -37,6 +37,7 @@ public interface FirebaseInterface {
 
     Map<String, Object> provideUserInfo();
 
+    Map<String, Object> getUserInfoWithId(String userId);
 
     void uploadStockPhoto(byte[] data);
 }
