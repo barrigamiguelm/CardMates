@@ -12,6 +12,8 @@
         android:layout_width="@dimen/_180sdp"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        app:iconifiedByDefault="true"
+        app:queryHint="Localidad"
         app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
