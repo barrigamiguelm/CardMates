@@ -10,8 +10,8 @@ import android.os.Bundle;
 import com.example.cardmates.databinding.ActivityMainBinding;
 
 
-import com.example.cardmates.fragments.ChatFragment;
 import com.example.cardmates.fragments.HomeFragment;
+import com.example.cardmates.fragments.MapsFragment;
 import com.example.cardmates.fragments.ProfileFragment;
 
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
                     break;
-                case R.id.chat:
+                case R.id.shops:
                     replaceFragment(new MapsFragment());
                     break;
                 case R.id.profile:

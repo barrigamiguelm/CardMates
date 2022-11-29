@@ -47,19 +47,6 @@
             app:layout_constraintStart_toEndOf="@+id/imageBack"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:id="@+id/imageMaps"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginRight="@dimen/_16sdp"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/ic_map"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
         <TextView
             android:id="@+id/textName"
             android:layout_width="0dp"
@@ -73,7 +60,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/imageMaps"
             app:layout_constraintStart_toEndOf="@id/imageUser"
             app:layout_constraintTop_toBottomOf="@id/imageUser"
             app:layout_constraintTop_toTopOf="@id/imageUser" />

@@ -11,9 +11,9 @@
             app:showAsAction="always" />
 
         <item
-            android:id="@+id/chat"
-            android:icon="@drawable/ic_baseline_chat_24"
-            android:title="@string/bottom_nav_chat"
+            android:id="@+id/shops"
+            android:icon="@drawable/ic_map"
+            android:title="@string/bottom_nav_shops"
             app:showAsAction="always" />
 
         <item

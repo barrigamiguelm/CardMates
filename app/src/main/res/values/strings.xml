@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CardMates</string>
     <string name="bottom_nav_home">Inicio</string>
-    <string name="bottom_nav_chat">Chat</string>
+    <string name="bottom_nav_shops">Tiendas</string>
     <string name="bottom_nav_profile">Perfil</string>
     <string name="title_activity_main2">MainActivity2</string>
     <!-- Strings used for fragments for navigation -->
