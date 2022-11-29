@@ -22,8 +22,6 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         binding = ActivityChatDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        getActionBar().hide();
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
 

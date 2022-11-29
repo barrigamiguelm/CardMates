@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +33,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,10 +62,10 @@ public class Tags extends AppCompatActivity {
 
 
     ArrayList<String> userLikesArray = new ArrayList<>();
+    ArrayList<String> userNoLikes = new ArrayList<>();
     Map<String, ArrayList> userLikes = new HashMap<>();
     Map<String, Map> cardUser = new HashMap<>();
     Map<String, Object> userTags = new HashMap<>();
-
 
 
     @Override
@@ -68,8 +73,6 @@ public class Tags extends AppCompatActivity {
         ((CardMatesApp) getApplicationContext()).getCardComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tags);
-
-        StringBuilder stringBuilder = new StringBuilder();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerTags);
         checkList = (Button) findViewById(R.id.checkList);
@@ -90,22 +93,24 @@ public class Tags extends AppCompatActivity {
                 .build();
 
         checkList.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                for (Map.Entry<String, Map> entry : cardUser.entrySet()) {
-                    String key = entry.getKey();
-                    DatabaseReference updateRef = myRef.child(key);
-                    updateRef.updateChildren(userTags);
-                    userLikesArray.add(key);
+                if (cardUser.isEmpty()) {
+                    userLikes.put("userLikes", userNoLikes);
+                    documentReferenceUser.set(userLikes, SetOptions.merge());
+                    startActivity(new Intent(Tags.this, MainActivity.class));
+                } else {
+                    for (Map.Entry<String, Map> entry : cardUser.entrySet()) {
+                        String key = entry.getKey();
+                        DatabaseReference updateRef = myRef.child(key);
+                        updateRef.updateChildren(userTags);
+                        userLikesArray.add(key);
+                    }
+                    userLikes.put("userLikes", userLikesArray);
+                    documentReferenceUser.set(userLikes, SetOptions.merge());
+                    startActivity(new Intent(Tags.this, MainActivity.class));
                 }
-
-                userLikes.put("userLikes", userLikesArray);
-                documentReferenceUser.set(userLikes, SetOptions.merge());
-                startActivity(new Intent(Tags.this, MainActivity.class));
             }
-
-
         });
 
         adapter = new FirestoreRecyclerAdapter<Cards, CardsViewHolder>(options) {
@@ -152,6 +157,23 @@ public class Tags extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
 
+
+    }
+
+    private void createDialog(DocumentReference documentReference) {
+        new AlertDialog.Builder(context)
+                .setTitle("Seguir")
+                .setMessage("¿Estas seguro que deseas seguir sin elegir ninguna carta?")
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        userLikes.put("userLikes", userLikesArray);
+                        documentReference.set("Sin cartas seleccionadas", SetOptions.merge());
+                        //startActivity(new Intent(Tags.this, MainActivity.class));
+                    }
+                })
+                .setNegativeButton("No", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
 
     }
 

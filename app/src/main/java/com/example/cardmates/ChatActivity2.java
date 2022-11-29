@@ -127,7 +127,6 @@ public class ChatActivity2 extends AppCompatActivity {
                     chatMessage.sender_id = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     chatMessage.reciever_id = documentChange.getDocument().getString(Constants.KEY_RECIEVER_ID);
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
-                    chatMessage.datetime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
                     chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
                     chatMessages.add(chatMessage);
                 }
@@ -151,10 +150,8 @@ public class ChatActivity2 extends AppCompatActivity {
 
     private void loadRecieverDetails() {
         otherUserId = getIntent().getStringExtra(Constants.KEY_OTHER_USER_ID);
-        reciverName = getIntent().getStringExtra(Constants.KEY_USER_NAME);
-        image_reciever = getIntent().getStringExtra(Constants.KEY_RECIEVER_IMG);
-        binding.textName.setText(reciverName);
-        binding.imageUser.setImageBitmap(getUserImage(image_reciever));
+        binding.textName.setText(getIntent().getStringExtra(Constants.KEY_USER_NAME));
+        binding.imageUser.setImageBitmap(getUserImage(getIntent().getStringExtra(Constants.KEY_RECIEVER_IMG)));
     }
 
     public void setListeners() {
@@ -173,10 +170,6 @@ public class ChatActivity2 extends AppCompatActivity {
         Intent intent = new Intent(this, ChatUserDetailActivity.class);
         intent.putExtra("otherUserId", otherUserId);
         startActivity(intent);
-    }
-
-    private String getReadableDateTime(Date date) {
-        return new SimpleDateFormat("dd MMMM, yyyy - hh:mm a", Locale.getDefault()).format(date);
     }
 
     private void addConversion(HashMap<String, Object> conversion) {

@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cardmates.dagger.CardMatesApp;
 import com.example.cardmates.R;
@@ -47,7 +48,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
     private ImageView profilePhotoUserProfile;
     private Button btnCreateUser, btnSkipUserProfile;
     private LoadingDialog loadingDialog;
-    private String desc = "Sin descripcion", dateBirth = "Sin fecha", localidad = "Sin localidad";
+    private String desc, dateBirth, localidad;
     private Uri imageUri;
     private String encodedImage;
 
@@ -106,14 +107,27 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         btnCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                desc = etUserDesc.getText().toString();
-                dateBirth = etDateBirt.getText().toString();
-                localidad = etUserLocal.getText().toString();
-                firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
+                if (comprobarTodoLleno()) {
+                    desc = etUserDesc.getText().toString();
+                    dateBirth = etDateBirt.getText().toString();
+                    localidad = etUserLocal.getText().toString();
+                    firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
+                } else {
+                    Toast.makeText(UserProfile.this, "Por favor rellena todos los campos o pulsa sobre 'Saltar' ", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
 
+    }
+
+    private boolean comprobarTodoLleno() {
+        if (dateBirth == null || localidad == null || desc == null || encodedImage == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private void initializeUserProfileInterface() {
@@ -142,7 +156,13 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
                 .setTitle("¿Saltar?");
         builder.setPositiveButton("Siguiente", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
+
+                //Make image a String
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.profile);
+                String encodedImage = encodeImage(icon);
+                firebaseInterface.addAditionalInfoWithNoInfo(encodedImage);
+
                 uploadStockPhoto();
                 startActivity(new Intent(UserProfile.this, Tags.class));
             }
@@ -178,7 +198,6 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
 
     private void chosePicture() {
         mGetContent.launch("image/*");
-
     }
 
     /*

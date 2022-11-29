@@ -277,6 +277,18 @@ public class FirebaseMethods implements FirebaseInterface {
     }
 
     @Override
+    public void addAditionalInfoWithNoInfo(String encodedImage) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("description", "Sin descripción");
+        data.put("Date", "Sin fecha");
+        data.put("user_id", getUserID());
+        data.put("Localidad", "Sin localidad");
+        data.put("image", encodedImage);
+        db.collection("Users").document(userID).set(data, SetOptions.merge());
+        userProfileInterface.showInfo();
+    }
+
+    @Override
     public void editUserInfo(String desc, String datebirth, String name, String localidad) {
         Map<String, Object> data = new HashMap<>();
         data.put("description", desc);
