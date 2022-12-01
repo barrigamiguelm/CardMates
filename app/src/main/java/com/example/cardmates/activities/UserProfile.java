@@ -48,7 +48,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
     private ImageView profilePhotoUserProfile;
     private Button btnCreateUser, btnSkipUserProfile;
     private LoadingDialog loadingDialog;
-    private String desc = "Sin descripcion", dateBirth = "Sin fecha", localidad = "Sin localidad";
+    private String desc, dateBirth, localidad;
     private Uri imageUri;
     private String encodedImage;
 
@@ -107,19 +107,10 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         btnCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (encodedImage == null) {
-                    Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                            R.drawable.profile);
-                    String encodedImage = encodeImage(icon);
-                    uploadStockPhoto();
-                    firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
-                } else {
-                    desc = etUserDesc.getText().toString();
-                    dateBirth = etDateBirt.getText().toString();
-                    localidad = etUserLocal.getText().toString();
-                    firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
-                }
-
+                desc = etUserDesc.getText().toString();
+                dateBirth = etDateBirt.getText().toString();
+                localidad = etUserLocal.getText().toString();
+                firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
             }
         });
 
