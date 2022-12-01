@@ -1,4 +1,4 @@
-package com.example.cardmates;
+package com.example.cardmates.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -88,18 +88,7 @@ public class ChatActivity2 extends AppCompatActivity {
         message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
         message.put(Constants.KEY_TIMESTAMP, new Date());
         database.collection(Constants.KEY_COLLECION_CHAT).add(message);
-        if (conversionID != null) {
-            updateconversion(binding.inputMessage.getText().toString());
-        } else {
-            HashMap<String, Object> conversion = new HashMap<>();
-            conversion.put(Constants.KEY_SENDER_ID, userId);
-            conversion.put(Constants.KEY_SENDER_NAME, firebaseInterface.provideUserInfo().get("Nombre").toString());
-            conversion.put(Constants.KEY_RECIEVER_ID, otherUserId);
-            conversion.put(Constants.KEY_RECEIVER_NAME, reciverName);
-            conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
-            conversion.put(Constants.KEY_TIMESTAMP, new Date());
-            addConversion(conversion);
-        }
+       
         binding.inputMessage.setText(" ");
     }
 

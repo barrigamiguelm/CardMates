@@ -1,6 +1,6 @@
 package com.example.cardmates.dagger;
 
-import com.example.cardmates.ChatActivity2;
+import com.example.cardmates.activities.ChatActivity2;
 import com.example.cardmates.activities.ChatUserDetailActivity;
 import com.example.cardmates.activities.Login;
 import com.example.cardmates.activities.ProfileEdit;

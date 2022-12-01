@@ -16,11 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cardmates.ChatActivity2;
-import com.example.cardmates.model.Constants;
+import com.example.cardmates.activities.ChatActivity2;
 import com.example.cardmates.model.User;
 import com.example.cardmates.R;
-import com.example.cardmates.model.UserChat;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
@@ -28,7 +26,6 @@ public class HomeRvAdapter
         extends FirestoreRecyclerAdapter<User, HomeRvAdapter.MyViewHolder> {
 
     Context context;
-    //TODO: no hacer que se actualice todo el rato porque si se registra un usuario mientas esta abierto en otro telefono, peta
 
     public HomeRvAdapter(@NonNull FirestoreRecyclerOptions<User> options, Context context) {
         super(options);

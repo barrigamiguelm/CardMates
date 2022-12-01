@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="#A8FFFFFF"
-    tools:context=".ChatActivity2">
+    tools:context=".activities.ChatActivity2">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentcontainer"
