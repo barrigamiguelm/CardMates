@@ -48,7 +48,7 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
     private ImageView profilePhotoUserProfile;
     private Button btnCreateUser, btnSkipUserProfile;
     private LoadingDialog loadingDialog;
-    private String desc, dateBirth, localidad;
+    private String desc = "Sin descripcion", dateBirth = "Sin fecha", localidad = "Sin localidad";
     private Uri imageUri;
     private String encodedImage;
 
@@ -107,13 +107,17 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
         btnCreateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (comprobarTodoLleno()) {
+                if (encodedImage == null) {
+                    Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                            R.drawable.profile);
+                    String encodedImage = encodeImage(icon);
+                    uploadStockPhoto();
+                    firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
+                } else {
                     desc = etUserDesc.getText().toString();
                     dateBirth = etDateBirt.getText().toString();
                     localidad = etUserLocal.getText().toString();
                     firebaseInterface.addAditionalInfo(desc, dateBirth, encodedImage, localidad);
-                } else {
-                    Toast.makeText(UserProfile.this, "Por favor rellena todos los campos o pulsa sobre 'Saltar' ", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -122,13 +126,6 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
 
     }
 
-    private boolean comprobarTodoLleno() {
-        if (dateBirth == null || localidad == null || desc == null || encodedImage == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     private void initializeUserProfileInterface() {
         firebaseInterface.initializeUserProfileInterface(this);
@@ -199,26 +196,6 @@ public class UserProfile extends AppCompatActivity implements UserProfileInterfa
     private void chosePicture() {
         mGetContent.launch("image/*");
     }
-
-    /*
-    private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    if (result.getData() != null) {
-                        Uri imageuri = result.getData().getData();
-                        try {
-                            InputStream inputStream = getContentResolver().openInputStream(imageuri);
-                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                            profilePhotoUserProfile.setImageBitmap(bitmap);
-                            encodedImage = encodeImage(bitmap);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-    );*/
 
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),

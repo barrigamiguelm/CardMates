@@ -37,7 +37,7 @@ public class ProfileEdit extends AppCompatActivity implements ProfileEditInterfa
     FirebaseInterface firebaseInterface;
 
     private Map<String, Object> userInfo;
-    private EditText edtDescProfileEdit, etDateBirtProfileEdit, edtProfileNameEdit,etLocalidadProfileEdit;
+    private EditText edtDescProfileEdit, etDateBirtProfileEdit, edtProfileNameEdit, etLocalidadProfileEdit;
     private ImageView imgUser;
     private Button saveUserChangesProfileEdit;
     private LoadingDialog loadingDialog;
@@ -112,7 +112,7 @@ public class ProfileEdit extends AppCompatActivity implements ProfileEditInterfa
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    if (uri != null){
+                    if (uri != null) {
                         loadingDialog.showDialog();
                         firebaseInterface.editPhotoUser(uri);
                         setPhoto(uri);

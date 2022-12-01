@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
     FirebaseInterface firebaseInterface;
 
     private Map<String, Object> userInfo;
-    private Button btnEditarPerfil,btnLogOut;
+    private Button btnEditarPerfil, btnLogOut;
     private TextView tvDes, tvName, tvEdad, tvLocal, tvUserLikes;
     private ImageView imgUser;
     private LoadingDialog loadingDialog;
@@ -87,7 +87,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void completar() {
-
         userInfo = firebaseInterface.provideUserInfo();
 
         String desc = String.valueOf(userInfo.get("Desc"));
